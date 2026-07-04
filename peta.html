@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SejarahWeb - Peta Malaysia</title>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
+<style>
+:root {
+    --bg-parchment:#f5eedc;
+    --paper-white:#fffdf9;
+    --vintage-brown:#3e2723;
+    --leather-dark:#271202;
+    --accent-gold:#c6a664;
+    --text-dark:#2b1d16;
+    --text-muted:#5d4037;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+    font-family:'Georgia','Times New Roman',serif;
+    color:var(--text-dark);
+
+    background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.6), transparent 40%),
+        radial-gradient(circle at bottom right, rgba(0,0,0,0.05), transparent 50%),
+        url("https://www.transparenttextures.com/patterns/old-mathematics.png"),
+        var(--bg-parchment);
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:radial-gradient(circle, transparent 60%, rgba(0,0,0,0.15) 100%);
+    pointer-events:none;
+}
+
+/* ================= NAVBAR ================= */
+nav {
+            background-color: var(--leather-dark);
+            border-bottom: 3px solid var(--accent-gold);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-area {
+            color: var(--bg-parchment);
+            font-weight: bold;
+            font-size: 1.3rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-area span {
+            color: var(--accent-gold);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            color: #d7ccc8;
+            text-decoration: none;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent-gold);
+            border-bottom: 2px solid var(--accent-gold);
+            padding-bottom: 5px;
+        }
+
+/* ================= HERO ================= */
+.hero{
+    height:200px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:white;
+
+    background:
+        linear-gradient(rgba(39,18,2,0.75), rgba(39,18,2,0.85)),
+        url("https://upload.wikimedia.org/wikipedia/commons/e/ea/Kuala_Lumpur_at_night_from_the_sky.jpg");
+    background-size:cover;
+    background-position:center;
+
+    border-bottom:4px double var(--accent-gold);
+}
+
+/* ================= LAYOUT ================= */
+.container{
+    display:flex;
+    gap:15px;
+    max-width:1200px;
+    margin:auto;
+    padding:20px;
+}
+
+/* ================= SIDEBAR ================= */
+.sidebar{
+    width:260px;
+    background:rgba(255,255,255,0.9);
+    border:3px solid var(--accent-gold);
+    border-radius:12px;
+    padding:12px;
+    height:560px;
+    overflow-y:auto;
+    box-shadow:0 10px 25px rgba(0,0,0,0.15);
+}
+
+.state-item{
+    padding:10px;
+    margin-bottom:8px;
+    border-radius:8px;
+    cursor:pointer;
+    background:rgba(255,255,255,0.6);
+    transition:0.2s;
+}
+
+.state-item:hover{
+    background:var(--accent-gold);
+    color:white;
+}
+
+/* ================= MAP ================= */
+.map-box{
+    flex:1;
+    background:rgba(255,255,255,0.85);
+    border:3px solid var(--accent-gold);
+    border-radius:12px;
+    padding:10px;
+}
+
+#map{
+    height:560px;
+    border-radius:10px;
+}
+
+/* ================= POPUP ================= */
+.ig-card{
+    width:280px;
+    background:white;
+    border-radius:12px;
+    overflow:hidden;
+}
+
+.ig-img-frame{
+    height:150px;
+    position:relative;
+    overflow:hidden;
+    background:black;
+}
+
+.ig-img-frame img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    position:absolute;
+    top:0;
+    left:0;
+}
+
+.ig-body{ padding:10px; }
+
+.ig-title{ font-weight:bold; }
+
+.ig-scroll{
+    text-align:justify;
+    font-size:12px;
+    max-height:170px;
+    overflow:auto;
+    margin-top:5px;
+    line-height:1.4;
+    
+}
+
+/* ================= FOOTER ================= */
+footer {
+            background-color: var(--leather-dark);
+            color: #d7ccc8;
+            padding: 50px 5% 20px;
+            border-top: 4px double var(--accent-gold);
+        }
+
+        .copyright {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #8d6e63;
+        }
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav>
+<div class="logo-area">
+🏛️ SUDUT <span> JELAJAH MALAYSIA 📍</span>
+</div>
+
+<ul class="nav-links">
+    <li><a href="index.html">Utama</a></li>
+    <li><a href="tokoh.html">Tokoh</a></li>
+    <li><a class="active" href="#">Peta</a></li>
+    <li><a href="gallery.html">Galeri</a></li>
+    <li><a href="kuiz.html">Kuiz</a></li>
+    <li><a href="hubungi.html">Hubungi</a></li>
+</ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+<h1>Klik Peta Untuk Lihat Sejarah Malaysia 🇲🇾</h1>
+</div>
+
+<!-- MAIN -->
+<div class="container">
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+<h3>Senarai Negeri</h3>
+<div id="stateList"></div>
+</div>
+
+<!-- MAP -->
+<div class="map-box">
+<div id="map"></div>
+</div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+        <div class="copyright">
+            © 2026 Tokoh Sejarah Malaysia. Hak Cipta Terpelihara. Rekaan Tugasan Kumpulan IML513.
+        </div>
+    </footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+
+// ================= MAP =================
+const map = L.map('map').setView([4.2, 101.9], 6);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+maxZoom:19
+}).addTo(map);
+
+// ================= FULL DATA =================
+const states = [
+{
+name:"Perlis ⛰️",
+lat:6.4449,lng:100.2048,
+img:"image/perlis.jpg",
+story:"Perlis negeri terkecil",
+moreInfo:"Sejarah Perlis amat berkait rapat dengan Kedah. Asalnya Perlis adalah sebuah wilayah kecil di bawah naungan Kedah yang dikenali sebagai Kota Sena, Kurpan, atau Palit. Berikutan serangan Siam ke atas Kedah pada tahun 1821, Sultan Kedah terpaksa berundur. Bagi memudahkan kawalan, Siam membahagikan Kedah kepada empat wilayah pentadbiran berasingan pada tahun 1841. Pada tahun 1843, Syed Hussain Jamalullail yang berjaya mengekalkan keamanan wilayah tersebut telah diiktiraf oleh Raja Siam (Raja Rama III) sebagai Raja Perlis yang pertama, bebas daripada pentadbiran Kedah. Sempadan Perlis dimutamadkan melalui Perjanjian Bangkok 1909 apabila hak pertuanan Siam diserahkan kepada British.."
+},
+{
+name:"Kedah 🌾",
+lat:6.1184,lng:100.3685,
+img:"image/kedah.jpg",
+story:"Kerajaan tertua",
+moreInfo:"Kedah merupakan kerajaan tertua yang mempunyai kesinambungan pemerintahan tanpa putus di Malaysia. Penemuan tapak arkeologi di Lembah Bujang membuktikan kewujudan tamadun perdagangan berasaskan peleburan besi dan pengaruh Hindu-Buddha yang kuat seawal abad ke-5, menjadikannya pusat entrepot penting bagi pedagang India, Arab, dan China. Sepanjang abad ke-18 dan ke-19, Kedah sering menghadapi ancaman daripada Bugis dan Siam, yang membawa kepada peristiwa penghantaran Bunga Emas kepada Siam sebagai tanda naungan, sebelum Perjanjian Bangkok 1909 menyerahkan hak naungan tersebut kepada British.."
+},
+{
+name:"Pulau Pinang 🌊",
+lat:5.4141,lng:100.3288,
+img:"image/penang.jpg",
+story:"Francis Light 1786",
+moreInfo:"Sebelum kedatangan British, Pulau Pinang merupakan wilayah di bawah kekuasaan Kesultanan Kedah yang dihuni oleh nelayan dan petani. Pada tahun 1786, Francis Light mengambil kesempatan daripada konflik domestik Kedah dengan menawarkan perlindungan ketenteraan sebagai ganti menduduki pulau itu, yang kemudiannya dinamakan Prince of Wales Island. Pada tahun 1800, SHTI mengambil alih Seberang Perai (Province Wellesley) melalui Perjanjian Persahabatan dan Perikatan. Pulau Pinang menjadi model pelabuhan bebas pertama di Asia Tenggara, menarik imigran dari China, India, dan gugusan kepulauan Melayu, menjadikannya sebuah penempatan kosmopolitan yang pesat sebelum digabungkan ke dalam Negeri-negeri Selat pada 1826."
+},
+{
+name:"Perak 🪙",
+lat:4.5921,lng:101.0901,
+img:"image/perak.jpg",
+story:"Bijih timah",
+moreInfo:"Kesultanan Perak diasaskan pada tahun 1528 dan berkembang menjadi negeri yang sangat kaya di peringkat global pada abad ke-19 kerana sumber bijih timahnya di Lembah Kinta dan Larut. Kepesatan industri ini mencetuskan Perang Larut (pergaduhan kongsi gelap Cina Ghee Hin dan Hai San) serta perebutan takhta Kesultanan Perak antara Raja Abdullah dan Raja Ismail. Krisis ini memberi ruang kepada British untuk campur tangan menerusi Perjanjian Pangkor pada 20 Januari 1874. J.W.W. Birch dilantik sebagai Residen British pertama, namun dasar pentadbirannya yang mencabar adat resam tempatan mencetuskan penentangan hebat yang membawa kepada penentangan bersenjata pahlawan Melayu di Pasir Salak."
+},
+{
+name:"Selangor ⚡",
+lat:3.0738,lng:101.5183,
+img:"image/selangor.jpg",
+story:"Industri",
+moreInfo:"Selangor mula dihuni oleh masyarakat Melayu dan Orang Asli, namun landskap politiknya berubah pada abad ke-17 apabila kedatangan orang Bugis dari Sulawesi yang membina penempatan di Kuala Selangor dan Klang. Negeri ini kaya dengan bijih timah, yang kemudiannya mencetuskan Perang Klang antara Raja Abdullah dan Raja Mahadi. Keadaan anarki ini disusuli dengan serangan lanun ke atas kapal British di perairan Langat, memberi alasan kepada British untuk memaksa Sultan Abdul Samad menerima sistem Residen pada 1874. Kuala Lumpur kemudiannya berkembang pesat sebagai pusat ekonomi dan dijadikan ibu negeri serta pusat pentadbiran Negeri-negeri Melayu Bersekutu pada 1896."
+},
+{
+name:"Kuala Lumpur 🏙️",
+lat:3.1390,lng:101.6869,
+img:"image/Kuala Lumpur.jpg",
+story:"Lombong",
+moreInfo:"Kuala Lumpur (KL) ialah ibu negara dan pusat ekonomi terbesar di Malaysia yang dibuka sekitar tahun 1857. Bandar raya ini diasaskan di pertemuan Sungai Klang dan Sungai Gombak apabila sekumpulan pelombong Cina dihantar oleh Raja Abdullah untuk membuka lombong bijih timah di Ampang. Tokoh penting seperti Yap Ah Loy memainkan peranan besar dalam membangunkan semula bandar ini selepas musnah akibat perang dan kebakaran, manakala pihak British menukarkan struktur bangunan daripada kayu kepada bata serta menjadikannya ibu kota Negeri-Negeri Melayu Bersekutu pada tahun 1896. Walaupun pusat pentadbiran kerajaan persekutuan telah berpindah ke Putrajaya pada tahun 1999, KL kekal sebagai ibu kota rasmi, pusat kebudayaan, dan mercu tanda moden negara seperti Menara Berkembar Petronas."
+},
+{
+name:"Putrajaya 🏛️",
+lat:2.9264,lng:101.6964,
+img:"image/putrajaya.jpg",
+story:"Pentadbiran",
+moreInfo:"Putrajaya merupakan pusat pentadbiran kerajaan persekutuan Malaysia yang direka sebagai bandar pintar dalam taman. Bandar ini diasaskan pada tahun 1995 bagi mengurangkan kesesakan di Kuala Lumpur, dan mula berfungsi secara rasmi sebagai pusat pentadbiran pada tahun 1999 selepas pejabat Perdana Menteri dipindahkan ke sana. Nama Putrajaya diambil bersempena nama Perdana Menteri Malaysia yang pertama, Tunku Abdul Rahman Putra Al-Haj, dan bandar ini diwartakan sebagai Wilayah Persekutuan yang ketiga pada tahun 2001. Terkenal dengan landskap hijau, tasik buatan yang luas, serta seni bina ikonik seperti Perdana Putra dan Masjid Putra, Putrajaya melambangkan pusat tadbir urus moden negara."
+},
+{
+name:"Negeri Sembilan 🐂",
+lat:2.7258,lng:102.2525,
+img:"image/negeri sembilan.jpg",
+story:"Adat Perpatih",
+moreInfo:"Bermula dari abad ke-14, masyarakat Minangkabau dari Sumatera berhijrah secara berperingkat ke kawasan pedalaman semenanjung dan membentuk sembilan buah daerah (luak) kecil di bawah perlindungan Kesultanan Melaka dan kemudiannya Kesultanan Johor. Apabila pengaruh Johor merosot pada abad ke-18 disebabkan ancaman Bugis, para pembesar luak mengambil keputusan untuk menjemput seorang putera raja dari Pagaruyung untuk menyatukan mereka pada tahun 1773. Keunikan utama Negeri Sembilan adalah pengamalan Adat Perpatih, sebuah sistem struktur sosial matrilinial (mengutamakan keturunan ibu) dan sistem pemilihan pemimpin tradisional yang demokratik."
+},
+{
+name:"Melaka 🏰",
+lat:2.1896,lng:102.2501,
+img:"image/melaka.jpg",
+story:"Pelabuhan",
+moreInfo:"Diasaskan sekitar tahun 1400, Melaka mempunyai kedudukan geografi yang sangat strategik di laluan perdagangan Selat Melaka. Di bawah naungan Dinasti Ming dari China dan penerimaan Islam oleh pemerintahnya, Melaka berkembang menjadi empayar perdagangan antarabangsa terbesar di dunia Barat dan Timur bagi herba dan rempah ratus. Sistem pentadbirannya tersusun melalui Hukum Kanun Melaka dan Undang-Undang Laut Melaka. Walau bagaimanapun, konflik dalaman dan kelemahan pertahanan membawa kepada kejatuhan kota ini ke tangan Portugis pada tahun 1511, memulakan era panjang penjajahan kuasa asing (Portugis, Belanda 1641, British 1824, dan Jepun 1941)."
+},
+{
+name:"Johor 🦅",
+lat:1.4854,lng:103.7618,
+img:"image/johor.jpg",
+story:"Kesultanan",
+moreInfo:"Kesultanan Johor diasaskan pada tahun 1528 dan dikenali sebagai Kesultanan Johor-Riau yang sentiasa berperang dengan Portugis dan Aceh untuk menguasai Selat Melaka (Perang Segitiga). Landskap politik Johor berubah apabila Dinasti Temenggong mengambil alih pemerintahan daripada keturunan Sultan Melaka lama pada abad ke-19. Di bawah kepimpinan Maharaja Abu Bakar, Johor melalui pemodenan yang luar biasa. Beliau memperkenalkan Undang-Undang Tubuh Kerajaan Johor 1895, memajukan industri lada hitam melalui Sistem Kangchu, dan berjaya mengekalkan kemerdekaan Johor untuk tempoh yang lama berbanding negeri-negeri Melayu yang lain."
+},
+{
+name:"Pahang 🐘",
+lat:3.8126,lng:103.3256,
+img:"image/pahang.jpg",
+story:"Terbesar",
+moreInfo:"Pahang dikesan dalam sejarah kuno China sejak zaman Dinasti Song dengan nama 'Pang-Hang'. Sebelum mempunyai kesultanan sendiri, Pahang berada di bawah penguasaan kerajaan Sriwijaya, Majapahit, dan Melaka yang ditadbir oleh keluarga Bendahara. Pada pertengahan abad ke-19, berlaku Perang Saudara Pahang antara Bendahara Mutahir dan adiknya, Wan Ahmad, merebut jawatan Bendahara. Wan Ahmad mencapai kemenangan dan menubuhkan kesultanan moden. Pahang terpaksa menerima Residen British pada 1888, yang mencetuskan penentangan bersenjata oleh pahlawan tempatan akibat ketidakpuasan hati terhadap pembinaan balai polis dan kehilangan hak tradisional memungut cukai."
+},
+{
+name:"Terengganu 📜",
+lat:5.3117,lng:103.1324,
+img:"image/terengganu.jpg",
+story:"Batu Bersurat",
+moreInfo:"Penemuan Batu Bersurat Terengganu yang bertarikh 1303 di Kuala Berang membuktikan bahawa Islam telah bertapak kukuh dan dijadikan undang-undang rasmi di negeri ini jauh sebelum Melaka. Kesultanan Terengganu moden diasaskan pada tahun 1708 dan terkenal dengan keteguhan budaya Islam serta kemahiran seni kraf tangan. Semasa pemerintahan Sultan Zainal Abidin III (1881-1918), baginda menggubal perlembagaan bertulis negeri, Itqan al-muluk bi ta'dil al-suluk (1911) untuk menyekat peluasan kuasa British selepas Perjanjian Bangkok 1909. Penentangan terhadap British memuncak pada tahun 1928 menerusi Pemberontakan Tani yang dipimpin oleh ulama tempatan."
+},
+{
+name:"Kelantan 👑",
+lat:6.1254,lng:102.2381,
+img:"image/kelantan.jpg",
+story:"Budaya",
+moreInfo:"Sejarah awal Kelantan dipenuhi dengan kewujudan beberapa kerajaan kecil sebelum disatukan oleh Long Yunus. Kelantan juga sinonim dengan kisah pemerintahan Raja Perempuan legenda seperti Cik Siti Wan Kembang. Disebabkan kedudukannya di utara, Kelantan sentiasa terdedah kepada pengaruh ketenteraan Siam, yang mewajibkan mereka menghantar ufti Bunga Emas ke Bangkok. Kelantan terkenal sebagai pusat perkembangan ilmu teologi Islam terkemuka di nusantara dengan institusi pondoknya yang meluas, melayakkannya mendapat gelaran Serambi Mekah. Melalui Perjanjian Bangkok 1909 kawalan pentadbiran diserahkan kepada Penasihat British. "
+},
+{
+name:"Sarawak 🦜",
+lat:1.5533,lng:110.3592,
+img:"image/sarawak.jpg",
+story:"Brooke",
+moreInfo:"Sehingga awal abad ke-19, Sarawak adalah sebuah wilayah jajahan takluk di bawah Kesultanan Brunei yang kaya dengan antimoni. Pada tahun 1839, berlaku pemberontakan oleh masyarakat tempatan menentang kezaliman wakil Sultan Brunei. Penguasa Brunei meminta bantuan daripada seorang pengembara British, James Brooke. Atas kejayaannya meredakan pemberontakan, James Brooke dilantik sebagai Rajah Sarawak pada tahun 1841. Pentadbiran dinasti Rajah Putih oleh keluarga Brooke berlangsung selama tiga generasi, menyaksikan perluasan sempadan Sarawak secara berperingkat. Selepas Perang Dunia Kedua, Sarawak diserahkan kepada Penjajah British pada 1946 sebelum menyertai Persekutuan Malaysia pada tahun 1963."
+},
+{
+name:"Sabah 🦧",
+lat:5.9804,lng:116.0735,
+img:"image/sabah.jpg",
+story:"Borneo",
+moreInfo:"Sejarah awal politik Sabah dibahagikan mengikut kawasan geografi: pantai barat ditadbir di bawah pengaruh Kesultanan Brunei, manakala pantai timur diletakkan di bawah pengaruh Kesultanan Sulu. Tarikan ekonomi Sabah menarik minat pelabur Barat dan pada tahun 1878, konsesi pajakan tanah diperoleh oleh Baron de Overbeck dan Alfred Dent. Mereka menubuhkan Syarikat Berpiagam Borneo Utara British (BNBC) yang mendapat piagam diraja British pada 1881 untuk mentadbir Sabah secara komersial dan politik. Selepas pendudukan tentera Jepun memusnahkan infrastruktur utama, pentadbiran diserahkan kepada Kerajaan British pada 1946 sebelum membentuk Malaysia pada tahun 1963."
+}
+];
+
+// ================= POPUP =================
+function createPopup(s){
+return `
+<div class="ig-card">
+
+<div class="ig-img-frame">
+<img src="${s.img}">
+</div>
+
+<div class="ig-body">
+
+<div class="ig-title">${s.name}</div>
+
+<div class="ig-scroll">
+
+<strong>Ringkasan:</strong><br>
+${s.story}
+
+<br><br>
+
+<strong>Maklumat Lanjut:</strong><br>
+${s.moreInfo}
+
+</div>
+
+</div>
+
+</div>`;
+}
+
+// ================= MARKERS =================
+let markers=[];
+
+function render(data){
+
+markers.forEach(m=>map.removeLayer(m));
+markers=[];
+
+data.forEach(s=>{
+
+const marker=L.marker([s.lat,s.lng]).addTo(map);
+
+marker.on('click',()=>{
+map.flyTo([s.lat,s.lng],8);
+
+L.popup()
+.setLatLng([s.lat,s.lng])
+.setContent(createPopup(s))
+.openOn(map);
+});
+
+markers.push(marker);
+});
+
+}
+
+render(states);
+
+// ================= SIDEBAR =================
+const stateList=document.getElementById("stateList");
+
+states.forEach(s=>{
+
+const div=document.createElement("div");
+div.className="state-item";
+div.innerText=s.name;
+
+div.onclick=()=>{
+map.flyTo([s.lat,s.lng],8);
+
+L.popup()
+.setLatLng([s.lat,s.lng])
+.setContent(createPopup(s))
+.openOn(map);
+};
+
+stateList.appendChild(div);
+});
+
+</script>
+
+</body>
+</html>

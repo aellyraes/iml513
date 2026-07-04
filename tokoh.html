@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sejarah Web - 12 Tokoh & Garis Masa</title>
+    <style>
+        /* --- PALET WARNA VINTAGE COKLAT & EMAS --- */
+        :root {
+            --bg-parchment: #f5eedc;
+            --paper-white: #fffdf9;
+            --vintage-brown: #3e2723;
+            --leather-dark: #271202;
+            --accent-gold: #c6a664;
+            --text-dark: #2b1d16;
+            --text-muted: #5d4037;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-parchment);
+            color: var(--text-dark);
+            font-family: 'Georgia', 'Times New Roman', serif;
+            line-height: 1.6;
+        }
+
+        /* --- NAVIGATION BAR --- */
+        nav {
+            background-color: var(--leather-dark);
+            border-bottom: 3px solid var(--accent-gold);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-area {
+            color: var(--bg-parchment);
+            font-weight: bold;
+            font-size: 1.3rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-area span {
+            color: var(--accent-gold);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            color: #d7ccc8;
+            text-decoration: none;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent-gold);
+            border-bottom: 2px solid var(--accent-gold);
+            padding-bottom: 5px;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            background: linear-gradient(rgba(39, 18, 2, 0.75), rgba(39, 18, 2, 0.9)), 
+                        url('https://upload.wikimedia.org/wikipedia/commons/e/ea/Kuala_Lumpur_at_night_from_the_sky.jpg') no-repeat center center/cover;
+            height: 380px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--bg-parchment);
+            padding: 20px;
+            border-bottom: 4px double var(--accent-gold);
+        }
+
+        .hero h2 {
+            font-size: 2.8rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+            color: var(--paper-white);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            font-style: italic;
+            max-width: 700px;
+            color: #d7ccc8;
+        }
+
+        /* --- SECTION MAIN TITLE --- */
+        .section-title-container {
+            text-align: center;
+            padding: 50px 20px 20px;
+        }
+
+        .section-title-container h2 {
+            font-size: 2.2rem;
+            color: var(--leather-dark);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .section-title-container p {
+            font-style: italic;
+            color: var(--text-muted);
+            margin-top: 10px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .divider-star {
+            color: var(--accent-gold);
+            margin: 10px 0;
+            font-size: 1.2rem;
+        }
+
+        /* --- GRID TOKOH (12 CARDS) --- */
+        .tokoh-section {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 0 20px 60px;
+        }
+
+        .tokoh-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 25px;
+        }
+
+        .tokoh-card {
+            background-color: var(--paper-white);
+            border: 1px solid #e0d4be;
+            border-radius: 4px;
+            padding: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .tokoh-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(62, 39, 35, 0.2);
+            border-color: var(--accent-gold);
+        }
+
+        .badge-number {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background-color: var(--accent-gold);
+            color: var(--leather-dark);
+            font-weight: bold;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            z-index: 10;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .image-container {
+            width: 100%;
+            height: 230px;
+            background-color: #eae3d2;
+            overflow: hidden;
+            border-radius: 2px;
+            margin-bottom: 15px;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: sepia(0.85) contrast(1.15) brightness(0.9);
+        }
+
+        .tokoh-info {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .tokoh-info h3 {
+            font-size: 1.2rem;
+            color: var(--leather-dark);
+            margin-bottom: 8px;
+            min-height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tokoh-info p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+
+        .profile-btn {
+            background-color: var(--vintage-brown);
+            color: var(--bg-parchment);
+            border: none;
+            padding: 8px 15px;
+            font-family: 'Georgia', serif;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: 0.3s;
+            text-transform: uppercase;
+            width: 100%;
+        }
+
+        .profile-btn:hover {
+            background-color: var(--accent-gold);
+            color: var(--leather-dark);
+        }
+
+        /* =========================================
+           --- INTERACTIVE MODAL (POPUP) SYSTEM ---
+           ========================================= */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(39, 18, 2, 0.85);
+            z-index: 2000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+            padding: 20px;
+        }
+
+        .modal-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-box {
+            background-color: var(--paper-white);
+            border: 3px double var(--accent-gold);
+            border-radius: 6px;
+            max-width: 750px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+            padding: 35px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            transform: scale(0.85);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .modal-overlay.open .modal-box {
+            transform: scale(1);
+        }
+
+        .close-modal-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2rem;
+            background: none;
+            border: none;
+            color: var(--vintage-brown);
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .close-modal-btn:hover {
+            color: var(--accent-gold);
+        }
+
+        .modal-body-layout {
+            display: flex;
+            gap: 25px;
+            margin-top: 15px;
+        }
+
+        .modal-profile-img {
+            flex: 1;
+            min-width: 200px;
+            height: 260px;
+            border: 4px double var(--vintage-brown);
+            border-radius: 2px;
+            overflow: hidden;
+            background-color: #eae3d2;
+        }
+
+        .modal-profile-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: sepia(0.6) contrast(1.1);
+        }
+
+        .modal-profile-details {
+            flex: 2;
+        }
+
+        .modal-tokoh-title {
+            font-size: 1.8rem;
+            color: var(--leather-dark);
+            line-height: 1.2;
+            margin-bottom: 5px;
+        }
+
+        .modal-tokoh-role {
+            font-size: 1rem;
+            font-weight: bold;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            border-bottom: 1px dashed #d1c4a8;
+            padding-bottom: 5px;
+        }
+
+        .fact-section-title {
+            font-size: 1.05rem;
+            color: var(--vintage-brown);
+            font-weight: bold;
+            margin-top: 12px;
+            margin-bottom: 4px;
+        }
+
+        .modal-profile-details p {
+            font-size: 0.95rem;
+            text-align: justify;
+            color: var(--text-dark);
+        }
+
+        .modal-profile-details ul {
+            padding-left: 20px;
+            font-size: 0.92rem;
+            color: var(--text-muted);
+        }
+
+        .modal-profile-details ul li {
+            margin-bottom: 5px;
+        }
+
+        @media (max-width: 650px) {
+            .modal-body-layout {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .modal-profile-details p {
+                text-align: center;
+            }
+            .modal-profile-details ul {
+                text-align: left;
+            }
+        }
+
+        /* =========================================
+           --- LIVE INTERACTIVE TIMELINE STYLE ---
+           ========================================= */
+        .timeline-section {
+            background-color: #ebdcb9;
+            background-image: radial-gradient(#dfceaa 1px, transparent 1px);
+            background-size: 20px 20px;
+            border-top: 3px double var(--vintage-brown);
+            border-bottom: 3px double var(--vintage-brown);
+            padding: 60px 20px;
+        }
+
+        .timeline-nav-container {
+            max-width: 1000px;
+            margin: 30px auto;
+            position: relative;
+            padding: 10px 0;
+        }
+
+        .timeline-line {
+            position: absolute;
+            top: 50%;
+            left: 5%;
+            width: 90%;
+            height: 4px;
+            background: var(--vintage-brown);
+            z-index: 1;
+            transform: translateY(-50%);
+            border-radius: 2px;
+        }
+
+        .timeline-btn-wrapper {
+            position: relative;
+            z-index: 5;
+            display: flex;
+            justify-content: space-between;
+            max-width: 90%;
+            margin: 0 auto;
+        }
+
+        .time-node-btn {
+            background-color: var(--paper-white);
+            border: 3px solid var(--vintage-brown);
+            color: var(--leather-dark);
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            font-family: 'Georgia', serif;
+            font-weight: bold;
+            font-size: 1.05rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        .time-node-btn span {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: var(--accent-gold);
+            display: block;
+            margin-top: -2px;
+        }
+
+        .time-node-btn:hover, .time-node-btn.active {
+            background-color: var(--leather-dark);
+            color: var(--paper-white);
+            border-color: var(--accent-gold);
+            transform: scale(1.18);
+            box-shadow: 0 6px 15px rgba(62, 39, 35, 0.4);
+        }
+
+        .timeline-display-card {
+            max-width: 850px;
+            margin: 40px auto 0;
+            background: var(--paper-white);
+            border: 2px solid var(--accent-gold);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-radius: 6px;
+            padding: 30px;
+            display: none;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .timeline-display-card.active-display {
+            display: flex;
+            animation: cardFadeIn 0.5s ease forwards;
+        }
+
+        @keyframes cardFadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .display-img-box {
+            flex: 1;
+            min-width: 250px;
+            height: 220px;
+            background-color: #ede5d3;
+            border: 4px double var(--vintage-brown);
+            overflow: hidden;
+            border-radius: 4px;
+        }
+
+        .display-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: sepia(0.7) contrast(1.1);
+        }
+
+        .display-text-box {
+            flex: 2;
+        }
+
+        .display-year {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--accent-gold);
+            line-height: 1;
+            margin-bottom: 5px;
+            border-bottom: 2px dashed var(--vintage-brown);
+            display: inline-block;
+            padding-bottom: 2px;
+        }
+
+        .display-title {
+            font-size: 1.4rem;
+            color: var(--leather-dark);
+            margin-bottom: 12px;
+            font-weight: bold;
+        }
+
+        .display-desc {
+            font-size: 0.95rem;
+            color: var(--text-dark);
+            text-align: justify;
+        }
+
+        @media (max-width: 768px) {
+            .timeline-btn-wrapper {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+            .timeline-line {
+                display: none;
+            }
+            .timeline-display-card.active-display {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        /* --- TAHUKAH ANDA SECTION --- */
+        .did-you-know {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .fact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .fact-card {
+            background-color: #faf4e6;
+            border: 1px solid var(--accent-gold);
+            border-left: 5px solid var(--vintage-brown);
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .fact-icon {
+            font-size: 2rem;
+            color: var(--accent-gold);
+        }
+
+        footer {
+            background-color: var(--leather-dark);
+            color: #d7ccc8;
+            padding: 50px 5% 20px;
+            border-top: 4px double var(--accent-gold);
+        }
+
+        .copyright {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #8d6e63;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo-area">
+            🏛️ Tokoh Sejarah <span>Malaysia</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Utama</a></li>
+            <li><a href="#" class="active">Tokoh</a></li>
+            <li><a href="peta.html">Peta</a></li>
+            <li><a href="gallery.html">Galeri</a></li>
+            <li><a href="kuiz.html">Kuiz</a></li>
+            <li><a href="hubungi.html">Hubungi</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero">
+        <h2>Tokoh-Tokoh Sejarah Malaysia</h2>
+        <p>Mengenali individu purba dan moden yang membentuk rentetan kemerdekaan tanah air kita.</p>
+    </header>
+
+    <main>
+        <div class="section-title-container">
+            <h2>Galeri 12 Tokoh Utama</h2>
+            <div class="divider-star">★ ★ ★ ★ ★</div>
+            <p>Sumbangan besar barisan pemimpin dan pahlawan dalam lipatan kronologi negara kita.</p>
+        </div>
+
+        <section class="tokoh-section">
+            <div class="tokoh-grid">
+                
+                <div class="tokoh-card">
+                    <div class="badge-number">1</div>
+                    <div class="image-container">
+                        <img src="images/tunku.webp" alt="Tunku Abdul Rahman">
+                    </div>
+                    <div class="tokoh-info">
+                        <h3>Tunku Abdul Rahman</h3>
+                        <p>Bapa Kemerdekaan dan Perdana Menteri Malaysia yang pertama mengetuai delegasi merdeka ke London.</p>
+                        <button class="profile-btn" onclick="openProfile('tunku')">Lihat Profil ➔</button>
+                    </div>
+                </div>
+
+                <div class="tokoh-card">
+                    <div class="badge-number">2</div>
+                    <div class="image-container">
+                        <img src="images/razak.webp" alt="Tun Abdul Razak">
+                    </div>
+                    <div class="tokoh-info">
+                        <h3>Tun Abdul Razak</h3>
+                        <p>Perdana Menteri Malaysia yang kedua dan arkitek pembangunan transformatif luar bandar.</p>
+                        <button class="profile-btn" onclick="openProfile('razak')">Lihat Profil ➔</button>
+                    </div>
+                </div>
+
+                <div class="tokoh-card">
+                    <div class="badge-number">3</div>
+                    <div class="image-container">
+                        <img src="images/hussien.webp" alt="Tun Hussein Onn">
+                    </div>
+                    <div class="tokoh-info">
+                        <h3>Tun Hussein Onn</h3>
+                        <p>Perdana Menteri Malaysia yang ketiga dan merupakan bapa perpaduan pentadbiran berintegriti.</p>
+                        <button class="profile-btn" onclick="openProfile('hussein')">Lihat Profil ➔</button>
+                    </div>
+                </div>
+
+                <div class="tokoh-card">
+                    <div class="badge-number">4</div>
+                    <div class="image-container">
+                        <img src="images/ismail.webp" alt="Tun Dr. Ismail">
+                    </div>
+                    <div class="tokoh-info">
+                        <h3>Tun Dr. Ismail</h3>
+                        <p>Wira ekonomi negara dan juga merupakan mantan Timbalan Perdana Menteri Malaysia yang tegas.</p>
+                        <button class="profile-btn" onclick="openProfile('ismail')">Lihat Profil ➔</button>
+                    </div>
+                </div>
+
+                <div class="tokoh-card">
+                    <div class="badge-number">5</div>
+                    <div class="image-container">
+                        <img src="images/tang.webp" alt="Tun Tan Cheng Lock">
+                    </div>
+                    <div class="tokoh-info">
+                        <h3>Tun Tan Cheng Lock</h3>
+                        <p>Pengasas MCA dan pejuang hak kemasyarakatan serta pendidikan integrasi masyarakat Cina.</p>
+                        <button class="profile-btn" onclick="openProfile('chenglock')">Lihat Profil ➔</button>
+                    </div>
+                </div>
+
+                <div class="tokoh-card">
+                    <div class="badge-number">6</div>
+                    <div class="image-container">
+                        <img src="images/vt.webp" alt="Tun V. T. Sambanthan">
+                    </div>
+                    <div class="tokoh-info">
+                        <h3>Tun V. T. Sambanthan</h3>
+                        <p>Pemimpin utama masyarakat India dan tokoh penting penyatuan kaum era kemerdekaan.</p>
+                        <button class="profile-btn" onclick="openProfile('sambanthan')">Lihat Profil ➔</button>
+                    </div>
+                </div>
+
+                <div class="tokoh-card">
+                    <div class="badge-number">7</div>
+                    <div class="image-container">
+                        <img src="images/onn.webp" alt="Dato' Onn Jaafar">
+                    </div>
+                    <div class="tokoh-info">
+                        <h3>Dato' Onn Jaafar</h3>
+                        <p>Pengasas awal UMNO dan penggerak utama pejuang penyatuan serta perpaduan bangsa Melayu.</p>
+                        <button class="profile-btn" onclick="openProfile('onnjaafar')">Lihat Profil ➔</button>
+                    </div>
+                </div>
+
+                <div class="tokoh-card">
+                    <div class="badge-number">8</div>
+                    <div class="image-container">
+                        <img src="images/tuah.webp" alt="Hang Tuah">
+                    </div>
+                    <div class="tokoh-info">
+                        <h3>Hang Tuah</h3>
+                        <p>Pahlawan legenda maritim Melayu yang amat setia kepada institusi Kesultanan Melayu Melaka.</p>
+                        <button class="profile-btn" onclick="openProfile('hangtuah')">Lihat Profil ➔</button>
+                    </div>
+                </div>
+
+                <div class="tokoh-card">
+                    <div class="badge-number">9</div>
+                    <div class="image-container">
+                        <img src="images/janggut.webp" alt="Tok Janggut">
+                    </div>
+                    <div class="tokoh-info">
+                        <h3>Tok Janggut</h3>
+                        <p>Pejuang gagah perkasa rakyat Kelantan yang bangkit menentang pengenalan sistem cukai British.</p>
+                        <button class="profile-btn" onclick="openProfile('tokjanggut')">Lihat Profil ➔</button>
+                    </div>
+                </div>
+
+                <div class="tokoh-card">
+                    <div class="badge-number">10</div>
+                    <div class="image-container">
+                        <img src="images/mat kilau.webp" alt="Mat Kilau">
+                    </div>
+                    <div class="tokoh-info">
+                        <h3>Mat Kilau</h3>
+                        <p>Pahlawan handal Pahang yang gigih melancarkan penentangan sengit gerilya menentang British.</p>
+                        <button class="profile-btn" onclick="openProfile('matkilau')">Lihat Profil ➔</button>
+                    </div>
+                </div>
+
+                <div class="tokoh-card">
+                    <div class="badge-number">11</div>
+                    <div class="image-container">
+                        <img src="images/rentap.webp" alt="Rentap">
+                    </div>
+                    <div class="tokoh-info">
+                        <h3>Rentap (Libau)</h3>
+                        <p>Pahlawan Iban terkemuka Sarawak yang menentang pemerintahan berat sebelah Rajah James Brooke.</p>
+                        <button class="profile-btn" onclick="openProfile('rentap')">Lihat Profil ➔</button>
+                    </div>
+                </div>
+
+                <div class="tokoh-card">
+                    <div class="badge-number">12</div>
+                    <div class="image-container">
+                        <img src="images/dol.webp" alt="Dol Said">
+                    </div>
+                    <div class="tokoh-info">
+                        <h3>Dol Said</h3>
+                        <p>Penghulu Naning Melaka yang berani melancarkan Perang Naning menentang bayaran ufti British.</p>
+                        <button class="profile-btn" onclick="openProfile('dolsaid')">Lihat Profil ➔</button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="timeline-section">
+            <div class="section-title-container" style="padding-top: 0;">
+                <h2>Garis Masa Sejarah Interaktif</h2>
+                <div class="divider-star">★ ★ ★ ★ ★</div>
+                <p>Klik pada mana-mana tahun di bawah untuk melihat evolusi sejarah tanah air kita secara langsung!</p>
+            </div>
+
+            <div class="timeline-nav-container">
+                <div class="timeline-line"></div>
+                <div class="timeline-btn-wrapper">
+                    <button class="time-node-btn active" onclick="showTimeline('1511')">1511 <span>Kejatuhan</span></button>
+                    <button class="time-node-btn" onclick="showTimeline('1946')">1946 <span>Union</span></button>
+                    <button class="time-node-btn" onclick="showTimeline('1957')">1957 <span>Merdeka</span></button>
+                    <button class="time-node-btn" onclick="showTimeline('1963')">1963 <span>Malaysia</span></button>
+                    <button class="time-node-btn" onclick="showTimeline('1970')">1970 <span>DEB</span></button>
+                </div>
+            </div>
+            
+            <div class="timeline-display-card active-display" id="time-1511">
+                <div class="display-img-box">
+                    <img src="images/melaka.jpg" alt="Zaman Melaka">
+                </div>
+                <div class="display-text-box">
+                    <div class="display-year">1511</div>
+                    <div class="display-title">Pencerobohan Portugis & Kejatuhan Melaka</div>
+                    <p class="display-desc">
+                        Titik bermulanya era kolonialisme di Tanah Melayu. Angkatan tentera Portugis di bawah pimpinan Alfonso de Albuquerque melancarkan serangan hebat dan berjaya menawan pelabuhan kosmopolitan Kesultanan Melayu Melaka, memaksa Sultan Mahmud Shah berundur.
+                    </p>
+                </div>
+            </div>
+
+            <div class="timeline-display-card" id="time-1946">
+                <div class="display-img-box">
+                    <img src="images/malayan.jpg" alt="Malayan Union">
+                </div>
+                <div class="display-text-box">
+                    <div class="display-year">1946</div>
+                    <div class="display-title">Kebangkitan Menentang Malayan Union</div>
+                    <p class="display-desc">
+                        British memperkenalkan gagasan Malayan Union yang menghapuskan kedaulatan Raja-raja Melayu dan memberikan hak kerakyatan longgar. Hal ini mencetuskan demonstrasi aman besar-besaran di seluruh ceruk semenanjung dan menyaksikan penubuhan UMNO di bawah Dato' Onn Jaafar untuk menyatukan suara rakyat.
+                    </p>
+                </div>
+            </div>
+
+            <div class="timeline-display-card" id="time-1957">
+                <div class="display-img-box">
+                    <img src="images/merdeka.jpg" alt="Merdeka 1957">
+                </div>
+                <div class="display-text-box">
+                    <div class="display-year">1957</div>
+                    <div class="display-title">Fajar Kemerdekaan Tanah Melayu</div>
+                    <p class="display-desc">
+                        Selepas melalui siri perundingan meja bulat di London, Persekutuan Tanah Melayu mencapai kemerdekaan mutlak daripada belenggu penjajahan British. Laungan "MERDEKA!" sebanyak 7 kali oleh Tunku Abdul Rahman di Stadium Merdeka bergema megah sebagai tanda sebuah negara berdaulat baru dilahirkan.
+                    </p>
+                </div>
+            </div>
+
+            <div class="timeline-display-card" id="time-1963">
+                <div class="display-img-box">
+                    <img src="images/malaysia.jpg" alt="Malaysia 1963">
+                </div>
+                <div class="display-text-box">
+                    <div class="display-year">1963</div>
+                    <div class="display-title">Lahirnya Sebuah Persekutuan Malaysia</div>
+                    <p class="display-desc">
+                        Penyatuan wilayah geografi yang lebih besar berlaku apabila Persekutuan Tanah Melayu, Sabah, Sarawak, dan Singapura bergabung untuk menubuhkan negara persekutuan Malaysia yang serba baharu pada 16 September 1963 demi keselamatan, kestabilan geopolitik, dan kemakmuran ekonomi serantau.
+                    </p>
+                </div>
+            </div>
+
+            <div class="timeline-display-card" id="time-1970">
+                <div class="display-img-box">
+                    <img src="images/deb.jpg" alt="Dasar Baru">
+                </div>
+                <div class="display-text-box">
+                    <div class="display-year">1970</div>
+                    <div class="display-title">Rukun Negara & Dasar Ekonomi Baru (DEB)</div>
+                    <p class="display-desc">
+                        Ekoran peristiwa rusuhan kaum 13 Mei 1969, kerajaan di bawah Tun Abdul Razak mengisytiharkan ideologi kebangsaan Rukun Negara untuk memupuk perpaduan erat, disusuli pelancaran Dasar Ekonomi Baru (DEB) bagi menyusun semula masyarakat dan membasmi kemiskinan tanpa mengira kaum.
+                    </p>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="did-you-know">
+            <div class="section-title-container" style="padding-top: 0;">
+                <h2>Fakta Tambahan</h2>
+                <div class="divider-star">★ ★ ★ ★ ★</div>
+            </div>
+            <div class="fact-grid">
+                <div class="fact-card">
+                    <div class="fact-icon">📢</div>
+                    <div>Tunku Abdul Rahman melaungkan kata sakti <strong>"Merdeka!"</strong> sebanyak 7 kali berturut-turut pada 31 Ogos 1957.</div>
+                </div>
+                <div class="fact-card">
+                    <div class="fact-icon">🗺️</div>
+                    <div>Malaysia masa kini terdiri daripada gabungan harmoni <strong>13 buah negeri</strong> dan <strong>3 Wilayah Persekutuan</strong>.</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="copyright">
+            © 2026 Tokoh Sejarah Malaysia. Hak Cipta Terpelihara. Rekaan Tugasan Kumpulan IML513.
+        </div>
+    </footer>
+
+    <div class="modal-overlay" id="profileModal" onclick="closeProfileOutside(event)">
+        <div class="modal-box">
+            <button class="close-modal-btn" onclick="closeProfile()">&times;</button>
+            <div class="modal-body-layout">
+                <div class="modal-profile-img">
+                    <img id="modalImg" src="" alt="Tokoh Img">
+                </div>
+                <div class="modal-profile-details">
+                    <h3 class="modal-tokoh-title" id="modalName">Nama Tokoh</h3>
+                    <div class="modal-tokoh-role" id="modalRole">Gelaran Utama</div>
+                    
+                    <div class="fact-section-title">📜 Ringkasan Sejarah & Biodata:</div>
+                    <p id="modalBio">Kandungan biografi...</p>
+                    
+                    <div class="fact-section-title">🎖️ Sumbangan & Peranan Utama:</div>
+                    <ul id="modalSumbangan">
+                        </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* --- DATABASE FAKTA SEJARAH BAGI 12 TOKOH --- */
+        const dataTokoh = {
+            tunku: {
+                name: "Tunku Abdul Rahman Putra Al-Haj",
+                role: "Bapa Kemerdekaan / Perdana Menteri Pertama",
+                img: "images/tunku.webp",
+                bio: "Dilahirkan di Alor Setar, Kedah, beliau mendapat pendidikan undang-undang di Cambridge. Merupakan Yang Dipertua UMNO yang mengetuai perjuangan diplomasi menuntut kemerdekaan Tanah Melayu daripada cengkaman British.",
+                sumbangan: [
+                    "Mengetuai Misi Kemerdekaan ke London pada tahun 1956 untuk menandatangani Perjanjian Kemerdekaan.",
+                    "Mengisytiharkan kemerdekaan rasmi negara pada 31 Ogos 1957 di Stadium Merdeka.",
+                    "Menjadi arkitek utama kepada pembentukan Persekutuan Malaysia pada 16 September 1963."
+                ]
+            },
+            razak: {
+                name: "Tun Abdul Razak Hussein",
+                role: "Bapa Pembangunan / Perdana Menteri Kedua",
+                img: "images/razak.webp",
+                bio: "Berasal dari Pekan, Pahang. Beliau dikenali sebagai pemimpin yang sangat berdedikasi terhadap kebajikan rakyat luar bandar dan memulihkan kestabilan negara selepas krisis parlimen 1969.",
+                sumbangan: [
+                    "Memperkenalkan Dasar Ekonomi Baru (DEB) pada 1970 untuk membasmi kemiskinan dan menyusun semula ekonomi masyarakat.",
+                    "Mengasaskan Lembaga Kemajuan Tanah Persekutuan (FELDA) untuk memajukan sektor pertanian luar bandar.",
+                    "Merangka Penyata Razak 1556 yang menjadi asas pembentukan sistem pendidikan kebangsaan homogen."
+                ]
+            },
+            hussein: {
+                name: "Tun Hussein Onn",
+                role: "Bapa Perpaduan / Perdana Menteri Ketiga",
+                img: "images/hussien.webp",
+                bio: "Anak kepada pengasas UMNO, Dato' Onn Jaafar. Dilahirkan di Johor Bahru, beliau terkenal dengan ketegasan dalam menegakkan kedaulatan undang-undang serta prinsip keadilan masyarakat.",
+                sumbangan: [
+                    "Melancarkan skim Amanah Saham Nasional (ASN) untuk meningkatkan ekuiti kaum bumiputera secara berstruktur.",
+                    "Menubuhkan Koperasi Usaha Bersatu bagi memperkasakan ekonomi mikro komuniti.",
+                    "Menekankan penyatuan kaum nasional menerusi pelbagai dasar pengukuhan kebudayaan nasional."
+                ]
+            },
+            ismail: {
+                name: "Tun Dr. Ismail Abdul Rahman",
+                role: "Wira Integriti / Mantan Timbalan Perdana Menteri",
+                img: "images/ismail.webp",
+                bio: "Dilahirkan di Johor, beliau merupakan pakar perubatan Melayu pertama yang berkelulusan dari Universiti Melbourne. Sifatnya yang tegas, jujur dan berpandangan jauh amat dihormati kawan mahupun lawan politik.",
+                sumbangan: [
+                    "Memegang peranan kritikal dalam memulihkan keharmonian kaum melalui Majlis Gerakan Negara (MAGERAN) pada 1969.",
+                    "Menjadi Duta Pertama Malaysia ke Amerika Syarikat dan Wakil Tetap ke Pertubuhan Bangsa-Bangsa Bersatu (PBB).",
+                    "Memperkukuh asas keselamatan negara di kala ancaman komunis memuncak."
+                ]
+            },
+            chenglock: {
+                name: "Tun Tan Cheng Lock",
+                role: "Pengasas MCA / Tokoh Integrasi Etnik",
+                img: "images/tang.webp",
+                bio: "Seorang tokoh korporat dan ahli politik berketurunan Baba Melaka. Beliau mendedikasikan hidupnya bagi memastikan kebajikan dan kewarganegaraan masyarakat Cina terpelihara dalam acuan Tanah Melayu.",
+                sumbangan: [
+                    "Mengasaskan Malayan Chinese Association (MCA) pada tahun 1949 untuk menyatukan masyarakat Cina.",
+                    "Menganggotai Jawatankuasa Perhubungan Antara Kaum (CLC) demi memupuk perkongsian kuasa politik.",
+                    "Menyokong padu penubuhan sebuah negara Tanah Melayu yang bersatu padu dan merdeka."
+                ]
+            },
+            sambanthan: {
+                name: "Tun V. T. Sambanthan",
+                role: "Mantan Presiden MIC / Tokoh Kebajikan Ladang",
+                img: "images/vt.webp",
+                bio: "Dilahirkan di Sungai Siput, Perak. Beliau mengetuai Kongres India Malaya (MIC) dan sentiasa memperjuangkan nasib komuniti pekerja industri ladang serta integrasi kaum etnik India.",
+                sumbangan: [
+                    "Turut serta bersama Tunku Abdul Rahman ke London dalam delegasi menuntut kemerdekaan Tanah Melayu.",
+                    "Menubuhkan Syarikat Kerjasama Permodalan Tanah bagi membantu pekerja ladang memiliki aset tanah sendiri.",
+                    "Berkhidmat sebagai Menteri Pos dan Telekom serta Menteri Perpaduan Negara dengan cemerlang."
+                ]
+            },
+            onnjaafar: {
+                name: "Dato' Onn Jaafar",
+                role: "Pengasas UMNO / Penggerak Nasionalisme",
+                img: "images/onn.webp",
+                bio: "Tokoh berkarisma tinggi dari Johor. Beliau merupakan pelopor awal kesedaran politik Melayu moden yang berani bangkit menyuarakan penolakan total hegemoni politik British.",
+                sumbangan: [
+                    "Mengetuai gerakan demonstrasi aman besar-besaran bagi menumbangkan gagasan Malayan Union pada 1946.",
+                    "Mengasaskan Pertubuhan Kebangsaan Melayu Bersatu (UMNO) dan menjadi Yang Dipertua pertama.",
+                    "Membuka jalan pemikiran awal tentang konsep integrasi pelbagai kaum melalui parti IMP."
+                ]
+            },
+            hangtuah: {
+                name: "Laksamana Hang Tuah",
+                role: "Pahlawan Maritim Legenda Kesultanan Melayu Melaka",
+                img: "images/tuah.webp",
+                bio: "Tokoh pahlawan terbilang pada abad ke-15 semasa pemerintahan Sultan Mansur Shah. Memiliki kemahiran bersilat yang tiada tandingan, kepintaran taktikal, dan kefasihan dalam pelbagai bahasa asing.",
+                sumbangan: [
+                    "Memelihara jalur perdagangan maritim Melaka daripada ancaman lanun dan serangan kuasa luar.",
+                    "Menjadi duta diplomatik diraja yang berjaya mengharumkan nama Melaka di China, India, dan Turki.",
+                    "Terkenal dengan ungkapan keramat falsafah bangsa: 'Takkan Melayu Hilang di Dunia'."
+                ]
+            },
+            tokjanggut: {
+                name: "Tok Janggut (Haji Mohd Hassan bin Munas)",
+                role: "Pejuang Anti-Penjajahan British di Kelantan",
+                img: "images/janggut.webp",
+                bio: "Dilahirkan di Kampung Jeram, Pasir Puteh, Kelantan. Beliau mendapat pendidikan agama di Mekah dan amat dihormati oleh masyarakat tempatan kerana prinsip perjuangannya yang berani.",
+                sumbangan: [
+                    "Mengetuai kebangkitan rakyat Kelantan menentang pengenalan sistem cukai tanah British yang membebankan pada 1915.",
+                    "Melancarkan serangan kubu ke atas Pasir Puteh dan berjaya menubuhkan pentadbiran tempatan sementara.",
+                    "Gugur syahid mempertahankan kedaulatan tanah air dalam pertempuran sengit di Kampung Saring."
+                ]
+            },
+            matkilau: {
+                name: "Mat Kilau bin Imam Rasu",
+                role: "Pahlawan Gerilya Pahang",
+                img: "images/mat kilau.webp",
+                bio: "Anak kepada Tok Gajah, beliau dilahirkan di Kampung Pulau Tawar, Jerantut, Pahang. Mahir ilmu pertahanan diri silat, taktik penyamaran, serta pakar dalam seluk-beluk geografi hutan belantara.",
+                sumbangan: [
+                    "Melancarkan gerakan perang gerilya jangka panjang menentang penyerapan kuasa Residen British di Pahang.",
+                    "Bekerjasama rapat dengan Dato' Bahaman dan Tok Gajah untuk melumpuhkan logistik ketenteraan penjajah.",
+                    "Menjadi simbol ketahanan fizikal dan spiritual pahlawan Melayu merentas zaman."
+                ]
+            },
+            rentap: {
+                name: "Rentap (Libau anak Ningkan)",
+                role: "Pahlawan Iban / Pejuang Kedaulatan Sarawak",
+                img: "images/rentap.webp",
+                bio: "Pemimpin agung pahlawan Iban di kawasan Saribas dan Ulu Skrang. Nama 'Rentap' bermaksud 'Ensubas Bumi' atau penggegar dunia, gelaran yang diberikan atas keberaniannya.",
+                sumbangan: [
+                    "Mengekang dan menentang perluasan kuasa unilateral Rajah Putih James Brooke di Sarawak dari tahun 1853.",
+                    "Membina kubu pertahanan yang sangat strategik dan utuh di puncak Bukit Sadok bagi mematahkan meriam British.",
+                    "Terkenal dengan melaungkan slogan azimat Iban: 'Agi Idup, Agi Ngelaban' (Selagi Hidup, Selagi Melawan)."
+                ]
+            },
+            dolsaid: {
+                name: "Dol Said (Dato' Abdul Said)",
+                role: "Penghulu Naning / Pelopor Perang Naning Melaka",
+                img: "images/dol.webp",
+                bio: "Merupakan Penghulu Naning yang kesembilan. Beliau memiliki latar belakang ilmu mempertahankan diri yang tinggi dan berpegang teguh pada adat resam serta maruah wilayahnya.",
+                sumbangan: [
+                    "Menentang sekeras-kerasnya tuntutan ufti satu persepuluh hasil bumi oleh pihak British ke atas daerah Naning.",
+                    "Mengetuai angkatan Naning memenangi fasa pertama Perang Naning (1831) dengan bantuan pakatan ketenteraan negeri jiran.",
+                    "Mempertahankan status kebebasan sistem pentadbiran tradisional masyarakat Naning daripada campur tangan asing."
+                ]
+            }
+        };
+
+        /* --- LOGIK JAVASCRIPT UNTUK MODAL POPUP --- */
+        function openProfile(tokohKey) {
+            const data = dataTokoh[tokohKey];
+            if (!data) return;
+
+            // Masukkan data dinamik ke dalam elemen modal
+            document.getElementById('modalImg').src = data.img;
+            document.getElementById('modalImg').alt = data.name;
+            document.getElementById('modalName').innerText = data.name;
+            document.getElementById('modalRole').innerText = data.role;
+            document.getElementById('modalBio').innerText = data.bio;
+
+            // Kosongkan dan bina semula senarai sumbangan tokoh
+            const sumbanganList = document.getElementById('modalSumbangan');
+            sumbanganList.innerHTML = "";
+            data.sumbangan.forEach(item => {
+                const li = document.createElement('li');
+                li.innerText = item;
+                sumbanganList.appendChild(li);
+            });
+
+            // Tunjukkan modal overlay ke skrin
+            document.getElementById('profileModal').classList.add('open');
+            document.body.style.overflow = "hidden"; // Mengunci skrol latar belakang
+        }
+
+        function closeProfile() {
+            document.getElementById('profileModal').classList.remove('open');
+            document.body.style.overflow = "auto"; // Mengaktifkan semula skrol latar belakang
+        }
+
+        // Menutup modal sekiranya pengguna klik di luar kawasan kotak putih
+        function closeProfileOutside(event) {
+            if (event.target.classList.contains('modal-overlay')) {
+                closeProfile();
+            }
+        }
+
+        /* --- LOGIK JAVASCRIPT UNTUK GARIS MASA (TIMELINE) --- */
+        function showTimeline(year) {
+            const buttons = document.querySelectorAll('.time-node-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            event.currentTarget.classList.add('active');
+
+            const cards = document.querySelectorAll('.timeline-display-card');
+            cards.forEach(card => card.classList.remove('active-display'));
+
+            const selectedCard = document.getElementById('time-' + year);
+            if(selectedCard) {
+                selectedCard.classList.add('active-display');
+            }
+        }
+    </script>
+</body>
+</html>

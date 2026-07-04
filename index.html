@@ -1,0 +1,1742 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SejarahWeb - Halaman Utama</title>
+
+<style>
+/* =========================================
+   PALET WARNA VINTAGE COKLAT & EMAS
+========================================= */
+:root {
+    --bg-parchment: #f5eedc;
+    --paper-white: #fffdf9;
+    --vintage-brown: #3e2723;
+    --leather-dark: #271202;
+    --accent-gold: #c6a664;
+    --text-dark: #2b1d16;
+    --text-muted: #5d4037;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:var(--bg-parchment);
+    color:var(--text-dark);
+    font-family:'Georgia','Times New Roman',serif;
+    line-height:1.7;
+}
+
+/* =========================================
+   NAVBAR
+========================================= */
+nav{
+    background-color:var(--leather-dark);
+    border-bottom:3px solid var(--accent-gold);
+    padding:15px 5%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.logo-area{
+    color:var(--bg-parchment);
+    font-weight:bold;
+    font-size:1.3rem;
+    letter-spacing:1px;
+    text-transform:uppercase;
+}
+
+.logo-area span{
+    color:var(--accent-gold);
+}
+
+.nav-links{
+    display:flex;
+    list-style:none;
+    gap:25px;
+}
+
+.nav-links a{
+    color:#d7ccc8;
+    text-decoration:none;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    transition:0.3s;
+}
+
+.nav-links a:hover,
+.nav-links a.active{
+    color:var(--accent-gold);
+    border-bottom:2px solid var(--accent-gold);
+    padding-bottom:5px;
+}
+
+/* =========================================
+   HERO
+========================================= */
+.hero{
+    background:
+    linear-gradient(rgba(39,18,2,.75),rgba(39,18,2,.85)),
+    url('landscape.png')
+    center center/cover;
+
+    min-height:500px;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    text-align:center;
+    color:white;
+    padding:20px;
+    border-bottom:4px double var(--accent-gold);
+}
+
+.hero h1{
+    font-size:3.5rem;
+    text-transform:uppercase;
+    letter-spacing:3px;
+    margin-bottom:20px;
+}
+
+.hero p{
+    max-width:850px;
+    font-size:1.2rem;
+    color:#ddd;
+}
+
+.hero-buttons{
+    margin-top:35px;
+}
+
+.hero-btn{
+    display:inline-block;
+    padding:12px 25px;
+    margin:8px;
+    text-decoration:none;
+    font-weight:bold;
+    transition:0.3s;
+}
+
+.hero-btn:first-child{
+    background:var(--accent-gold);
+    color:var(--leather-dark);
+}
+
+.hero-btn:last-child{
+    background:var(--vintage-brown);
+    color:white;
+}
+
+.hero-btn:hover{
+    transform:translateY(-3px);
+}
+
+/* =========================================
+   SECTION TITLE
+========================================= */
+.section-title-container{
+    text-align:center;
+    padding:60px 20px 25px;
+}
+
+.section-title-container h2{
+    font-size:2.3rem;
+    text-transform:uppercase;
+    color:var(--leather-dark);
+}
+
+.divider-star{
+    color:var(--accent-gold);
+    margin:10px 0;
+    font-size:1.1rem;
+}
+
+/* =========================================
+   WELCOME
+========================================= */
+.welcome-section{
+    max-width:1100px;
+    margin:auto;
+    padding:20px;
+}
+
+.welcome-card{
+    background:var(--paper-white);
+    border:1px solid #e0d4be;
+    padding:40px;
+    text-align:center;
+    box-shadow:0 4px 10px rgba(0,0,0,0.08);
+}
+
+.welcome-card p{
+    font-size:1.05rem;
+}
+
+/* =========================================
+   FEATURES
+========================================= */
+.feature-grid{
+    max-width:1200px;
+    margin:auto;
+    padding:20px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
+}
+
+.feature-card{
+    background:var(--paper-white);
+    border:1px solid #e0d4be;
+    padding:30px 20px;
+    text-align:center;
+    transition:0.3s;
+}
+
+.feature-card:hover{
+    transform:translateY(-8px);
+    border-color:var(--accent-gold);
+    box-shadow:0 8px 16px rgba(0,0,0,.12);
+}
+
+.feature-icon{
+    font-size:3rem;
+    margin-bottom:15px;
+}
+
+.feature-card h3{
+    color:var(--leather-dark);
+    margin-bottom:10px;
+}
+
+.feature-card a{
+    display:inline-block;
+    margin-top:15px;
+    text-decoration:none;
+    color:var(--accent-gold);
+    font-weight:bold;
+}
+
+/* =========================================
+   STATISTICS
+========================================= */
+.stats-section{
+    max-width:1200px;
+    margin:70px auto;
+    padding:20px;
+
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+}
+
+.stat-box{
+    background:var(--leather-dark);
+    color:white;
+    text-align:center;
+    padding:35px;
+    border:2px solid var(--accent-gold);
+}
+
+.stat-box h3{
+    font-size:3rem;
+    color:var(--accent-gold);
+}
+
+.stat-box p{
+    margin-top:10px;
+}
+
+
+/* =========================================
+   QUOTE
+========================================= */
+.quote-section{
+    margin-top:80px;
+    padding:80px 20px;
+    text-align:center;
+    background:#ebdcb9;
+    border-top:3px double var(--vintage-brown);
+    border-bottom:3px double var(--vintage-brown);
+}
+
+.quote-section blockquote{
+    font-size:2rem;
+    color:var(--vintage-brown);
+    font-style:italic;
+    margin-bottom:15px;
+}
+
+/* =========================================
+   CONTACT CTA
+========================================= */
+
+.contact-cta{
+    margin-top:80px;
+    padding:80px 20px;
+
+    background:
+    linear-gradient(
+    rgba(39,18,2,.85),
+    rgba(39,18,2,.90)),
+    url('landscape2.png')
+    center center/cover;
+
+    border-top:4px double var(--accent-gold);
+    border-bottom:4px double var(--accent-gold);
+
+    text-align:center;
+}
+
+.cta-content{
+    max-width:800px;
+    margin:auto;
+}
+
+.contact-cta h2{
+    color:white;
+    font-size:2.4rem;
+    text-transform:uppercase;
+    letter-spacing:2px;
+}
+
+.contact-cta p{
+    color:#ddd;
+    margin:20px 0 30px;
+    font-size:1.05rem;
+}
+
+.contact-btn{
+    display:inline-block;
+    padding:14px 35px;
+    background:var(--accent-gold);
+    color:var(--leather-dark);
+    text-decoration:none;
+    font-weight:bold;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    transition:.3s;
+}
+
+.contact-btn:hover{
+    transform:translateY(-4px);
+    background:#d8b977;
+}
+
+/* =========================================
+   FOOTER
+========================================= */
+footer{
+    background:var(--leather-dark);
+    color:#d7ccc8;
+    padding:50px 20px 20px;
+    border-top:4px double var(--accent-gold);
+}
+
+.copyright{
+    text-align:center;
+    color:#8d6e63;
+    font-size:.85rem;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+@media(max-width:768px){
+
+.hero h1{
+    font-size:2.3rem;
+}
+
+.nav-links{
+    gap:12px;
+}
+
+.nav-links a{
+    font-size:.8rem;
+}
+}
+/* =========================
+   CHAT BUTTON
+========================= */
+#chat-btn{
+    position:fixed;
+    bottom:25px;
+    right:25px;
+
+    width:65px;
+    height:65px;
+
+    border-radius:50%;
+    background:var(--accent-gold);
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:28px;
+    cursor:pointer;
+
+    box-shadow:0 5px 20px rgba(0,0,0,.25);
+    z-index:9999;
+}
+
+/* =========================
+   CHAT WINDOW
+========================= */
+#chat-window{
+    position:fixed;
+    bottom:100px;
+    right:20px;
+
+    width:340px;
+    height:500px;
+
+    background:#fff;
+    border-radius:20px;
+
+    overflow:hidden;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.3);
+    z-index:9999;
+
+    display:none;  
+
+    flex-direction:column;
+}
+
+/* HEADER */
+.chat-header{
+    background:var(--text-muted);
+    color:white;
+    padding:12px 15px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.header-info{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.bot-avatar{
+    font-size:26px;
+}
+
+.bot-status{
+    font-size:12px;
+    color:#8cff8c;
+}
+
+/* =========================
+   CHAT BODY (IMPORTANT)
+========================= */
+#chatBody{
+    flex:1;
+    overflow-y:auto;
+    padding:12px;
+
+    background:#f7f1e4;
+
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+/* =========================
+   BUBBLE STYLE (WHATSAPP)
+========================= */
+.message{
+    max-width:75%;
+    padding:10px 14px;
+    border-radius:18px;
+    font-size:14px;
+    line-height:1.4;
+    word-wrap:break-word;
+}
+
+/* USER RIGHT */
+.message.user{
+    background:#dcf8c6;
+    align-self:flex-end;
+    border-bottom-right-radius:5px;
+}
+
+/* BOT LEFT */
+.message.bot{
+    background:white;
+    align-self:flex-start;
+    border-bottom-left-radius:5px;
+    box-shadow:0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* =========================
+   INPUT AREA (WHATSAPP STYLE)
+========================= */
+.chat-input-area{
+    display:flex;
+    gap:10px;
+    padding:10px;
+
+    border-top:1px solid #ddd;
+    background:white;
+}
+
+.chat-input-area input{
+    flex:1;
+    padding:10px 12px;
+
+    border:1px solid #ccc;
+    border-radius:20px;
+
+    outline:none;
+}
+
+.chat-input-area button{
+    padding:10px 15px;
+
+    border:none;
+    background:var(--accent-gold);
+    border-radius:20px;
+
+    cursor:pointer;
+}
+.chat-action-btn{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:10px 18px;
+
+    border:none;
+
+    border-radius:50px;
+
+    cursor:pointer;
+
+    font-weight:bold;
+
+    color:white;
+
+    background:linear-gradient(
+        135deg,
+        #c6a664,
+        #8d6e63
+    );
+
+    box-shadow:
+    0 4px 10px rgba(0,0,0,.15);
+
+    transition:.3s;
+}
+
+.chat-action-btn:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+    0 8px 18px rgba(0,0,0,.2);
+}
+
+.chat-action-btn:active{
+
+    transform:scale(.98);
+}
+
+.chat-action-btn:hover{
+
+    transform:translateY(-2px);
+
+    opacity:.9;
+
+}
+.typing{
+    background:white;
+    padding:10px 14px;
+    border-radius:18px;
+    width:fit-content;
+
+    display:flex;
+    gap:4px;
+    align-items:center;
+
+    box-shadow:0 1px 3px rgba(0,0,0,.1);
+}
+
+.typing span{
+    width:8px;
+    height:8px;
+
+    background:#999;
+    border-radius:50%;
+
+    animation:bounce 1.4s infinite;
+}
+
+.typing span:nth-child(2){
+    animation-delay:0.2s;
+}
+
+.typing span:nth-child(3){
+    animation-delay:0.4s;
+}
+
+@keyframes bounce{
+    0%,60%,100%{
+        transform:translateY(0);
+    }
+
+    30%{
+        transform:translateY(-5px);
+    }
+}
+.bot-card{
+
+    background:white;
+
+    border-left:5px solid var(--accent-gold);
+
+    padding:15px;
+
+    border-radius:12px;
+
+    margin-top:5px;
+}
+
+.bot-card-title{
+
+    font-size:16px;
+
+    font-weight:bold;
+
+    color:var(--leather-dark);
+
+    margin-bottom:8px;
+}
+
+.bot-card-desc{
+
+    font-size:14px;
+
+    line-height:1.6;
+
+    color:#444;
+
+    margin-bottom:12px;
+}
+.feedback-form{
+    margin-top:10px;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+/* semua input style seragam */
+.feedback-form input,
+.feedback-form select,
+.feedback-form textarea{
+    width:100%;
+    padding:12px 14px;
+
+    border:1px solid #e0d4be;
+    border-radius:12px;
+
+    font-family:inherit;
+    font-size:14px;
+
+    background:#fffdf9;
+
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+
+    transition:0.2s;
+}
+
+/* hover effect */
+.feedback-form input:focus,
+.feedback-form select:focus,
+.feedback-form textarea:focus{
+    outline:none;
+    border-color:var(--accent-gold);
+    box-shadow:0 0 0 3px rgba(198,166,100,0.25);
+}
+
+/* textarea lebih natural */
+.feedback-form textarea{
+    resize:none;
+    height:90px;
+}
+
+.feedback-form textarea{
+
+    resize:none;
+    height:80px;
+}
+.button-group{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.button-group .chat-action-btn{
+    width: 100%;
+    justify-content: center;
+}
+.feedback-form select{
+    width:100%;
+    padding:10px 40px 10px 12px;
+
+    border:1px solid #ddd;
+    border-radius:10px;
+
+    font-family:inherit;
+    background:#fff;
+
+    /* BUANG native dropdown arrow */
+    appearance:none;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+
+    background-image:none;
+
+    cursor:pointer;
+}
+
+.feedback-form select:hover{
+    border-color: var(--accent-gold);
+}
+
+.feedback-form select:focus{
+    border-color: #c6a664;
+    box-shadow: 0 0 0 3px rgba(198,166,100,0.25);
+}
+
+.feedback-form select option{
+    background: white;
+    color: #2b1d16;
+}
+.select-wrapper{
+    position:relative;
+}
+
+.select-wrapper::after{
+    content:"▼";
+    position:absolute;
+    right:12px;
+    top:50%;
+    transform:translateY(-50%);
+    font-size:12px;
+    color:#3e2723;
+    pointer-events:none;
+}
+
+.select-wrapper select{
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding-right: 40px;
+}
+
+
+@media(max-width:768px){
+
+    #chat-window{
+        width:90%;
+        height:75vh;
+
+        right:5%;
+        bottom:90px;
+    }
+
+    .chat-body{
+        height:calc(75vh - 80px);
+    }
+
+}
+/* =========================
+   CLEAN POPUP (IMPROVED)
+========================= */
+.popup-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.65);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:99999;
+}
+
+/* CARD PREMIUM */
+.popup-card{
+    width:420px;
+    max-width:92%;
+    padding:45px 30px;
+    border-radius:26px;
+
+    text-align:center;
+    position:relative;
+
+    background:
+        radial-gradient(circle at top, #fffdf7, #f6ead7);
+
+    box-shadow:
+        0 25px 80px rgba(0,0,0,0.4);
+
+    border:1px solid rgba(198,166,100,0.4);
+
+    animation:pop 0.35s ease;
+}
+
+/* animation */
+@keyframes pop{
+    from{opacity:0; transform:scale(0.85) translateY(20px);}
+    to{opacity:1; transform:scale(1) translateY(0);}
+}
+
+/* ICON atas */
+.popup-icon{
+    font-size:42px;
+    margin-bottom:10px;
+    animation:float 2.5s ease-in-out infinite;
+}
+
+@keyframes float{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-8px);}
+}
+
+/* TITLE */
+.popup-title{
+    font-size:26px;
+    font-weight:700;
+    color:#2b1d16;
+    margin-bottom:12px;
+}
+
+/* divider gold */
+.popup-divider{
+    width:60px;
+    height:3px;
+    background:linear-gradient(90deg,#c6a664,#8d6e63);
+    margin:12px auto 18px;
+    border-radius:10px;
+}
+
+/* TEXT */
+.popup-text{
+    font-size:14px;
+    color:#5a463a;
+    line-height:1.7;
+    margin-bottom:25px;
+}
+
+/* BUTTON (stable + premium) */
+.popup-btn{
+    padding:14px 28px;
+    border:none;
+    border-radius:30px;
+
+    background:linear-gradient(135deg,#3e2723,#5d4037);
+    color:white;
+
+    font-weight:bold;
+    cursor:pointer;
+
+    transition:0.25s ease;
+
+    box-shadow:0 8px 20px rgba(0,0,0,0.2);
+}
+
+.popup-btn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 12px 28px rgba(0,0,0,0.3);
+}
+
+/* CLOSE BUTTON */
+.close-btn{
+    position:absolute;
+    top:12px;
+    right:15px;
+    background:none;
+    border:none;
+    font-size:22px;
+    cursor:pointer;
+    color:#3e2723;
+}
+
+.close-btn:hover{
+    color:#000;
+}
+
+/* title */
+.popup-card h1{
+    font-size:34px;
+    margin:10px 0;
+    color:#2b1d16;
+}
+
+/* text */
+.popup-text{
+    font-size:14px;
+    color:#555;
+    line-height:1.6;
+    margin-bottom:25px;
+}
+
+
+@keyframes popup{
+
+    from{
+        opacity:0;
+        transform:scale(.8);
+    }
+
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+
+}
+
+@media(max-width:768px){
+
+    .promo-popup{
+
+        width:90%;
+        padding:30px;
+    }
+
+    .promo-popup h2{
+
+        font-size:2rem;
+    }
+
+}
+.popup-badge{
+    display:inline-block;
+    padding:6px 14px;
+    border-radius:20px;
+
+    background:#f3e7d3;
+    color:#3e2723;
+
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:0.5px;
+
+    margin-bottom:15px;
+}
+
+@keyframes float{
+
+    0%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(-12px);
+    }
+
+    100%{
+        transform:translateY(0);
+    }
+
+}
+</style>
+</head>
+
+<body>
+<div id="popupOverlay" class="popup-overlay">
+    <div class="popup-card">
+
+        <div class="popup-icon">📖</div>
+
+        <h1 class="popup-title">Selamat Menduduki Peperiksaan</h1>
+
+        <div class="popup-divider"></div>
+
+        <p class="popup-text">
+            Ulang kaji Sejarah Malaysia dengan lebih mudah menggunakan
+            <b>SejarahWeb</b>.
+        </p>
+
+        <button class="popup-btn" onclick="closePopup()">
+            🚀 Mula Belajar
+        </button>
+
+    </div>
+</div>
+
+<!-- NAVBAR -->
+<nav>
+    <div class="logo-area">
+        🏛️ Portal <span>SejarahWeb</span>
+    </div>
+
+    <ul class="nav-links">
+        <li><a href="#" class="active">Utama</a></li>
+        <li><a href="tokoh.html">Tokoh</a></li>
+        <li><a href="peta.html">Peta</a></li>
+        <li><a href="gallery.html">Galeri</a></li>
+        <li><a href="kuiz.html">Kuiz</a></li>
+        <li><a href="hubungi.html">Hubungi</a></li>
+    </ul>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+    <h1>Portal Sejarah Digital</h1>
+
+    <p>
+        Menyingkap perjalanan sejarah Malaysia yang penuh peristiwa agung, 
+        kepimpinan tokoh berpengaruh dan warisan berharga negara melalui platform 
+        pembelajaran interaktif khas untuk pelajar sekolah menengah.
+    </p>
+
+    <div class="hero-buttons">
+        <a href="peta.html" class="hero-btn">Jelajah Malaysia</a>
+    </div>
+</header>
+
+<!-- WELCOME -->
+<section class="welcome-section">
+
+    <div class="section-title-container">
+        <h2>Selamat Datang</h2>
+        <div class="divider-star">★ ★ ★ ★ ★</div>
+    </div>
+
+    <div class="welcome-card">
+        <p>
+            Portal SejarahWeb dibangunkan bagi membantu
+            pelajar memahami perjalanan negara daripada era
+            Kesultanan Melayu Melaka sehingga pembentukan Malaysia moden.
+            Melalui pendekatan interaktif dan visual yang menarik,
+            pengunjung dapat meneroka tokoh, peristiwa dan khazanah
+            sejarah negara dengan lebih mudah.
+        </p>
+    </div>
+
+</section>
+
+<!-- FEATURES -->
+<section>
+
+    <div class="section-title-container">
+        <h2>Kandungan Portal</h2>
+        <div class="divider-star">★ ★ ★ ★ ★</div>
+        <p>Terokai pelbagai kandungan interaktif berkaitan sejarah Malaysia.</p>
+    </div>
+
+    <div class="feature-grid">
+
+        <!-- TOKOH -->
+        <div class="feature-card">
+            <div class="feature-icon">🏛️</div>
+            <h3>Tokoh Sejarah</h3>
+            <p>
+                Kenali tokoh-tokoh penting yang memainkan peranan besar
+                memperjuangkan kemerdekaan, pembangunan dan pembentukan
+                identiti Malaysia.
+            </p>
+            <a href="tokoh.html">Teroka →</a>
+        </div>
+
+        <!-- PETA -->
+        <div class="feature-card">
+            <div class="feature-icon">🗺️</div>
+            <h3>Peta Sejarah</h3>
+            <p>
+                Lihat lokasi bersejarah, negeri-negeri Malaysia serta
+                kawasan penting yang menjadi saksi kepada peristiwa
+                bersejarah negara.
+            </p>
+            <a href="peta.html">Teroka →</a>
+        </div>
+
+        <!-- GALERI -->
+        <div class="feature-card">
+            <div class="feature-icon">🖼️</div>
+            <h3>Galeri Sejarah</h3>
+            <p>
+                Pusat video pembelajaran Sejarah Malaysia merangkumi 
+                Tingkatan 1 hingga Tingkatan 5 yang memfokuskan 
+                topik, tokoh dan peristiwa penting.
+            </p>
+            <a href="gallery.html">Teroka →</a>
+        </div>
+
+        <!-- KUIZ -->
+        <div class="feature-card">
+            <div class="feature-icon">🎓</div>
+            <h3>Kuiz Interaktif</h3>
+            <p>
+                Uji pengetahuan anda mengenai sejarah Malaysia melalui
+                kuiz yang menyeronokkan dan mencabar untuk semua peringkat umur.
+            </p>
+            <a href="kuiz.html">Teroka →</a>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- STATISTICS -->
+<section class="stats-section">
+
+    <div class="stat-box">
+        <h3>12</h3>
+        <p>Tokoh Utama</p>
+    </div>
+
+    <div class="stat-box">
+        <h3>500+</h3>
+        <p>Tahun Sejarah</p>
+    </div>
+
+    <div class="stat-box">
+        <h3>5</h3>
+        <p>Peristiwa Penting</p>
+    </div>
+
+    <div class="stat-box">
+        <h3>13</h3>
+        <p>Negeri Malaysia</p>
+    </div>
+
+</section>
+
+<!-- CONTACT CTA -->
+<section class="contact-cta">
+
+    <div class="cta-content">
+
+        <h2>Hubungi Cikgu Sejarah</h2>
+
+        <div class="divider-star">★ ★ ★ ★ ★</div>
+
+        <p>
+            Kami sentiasa mengalu-alukan pertanyaan dan pandangan 
+            berkaitan Sejarah Malaysia. 
+            Rujuk Cikgu Sejarah untuk bimbingan serta penjelasan lanjut.
+        </p>
+
+        <a href="hubungi.html" class="contact-btn">
+            Tanya Cikgu →
+        </a>
+
+    </div>
+
+</section>
+
+<!-- QUOTE -->
+<section class="quote-section">
+
+    <blockquote>
+        "Sejarah adalah guru terbaik kepada manusia."
+    </blockquote>
+
+    <p>
+        Memahami masa lalu membantu kita membina masa depan yang lebih baik.
+    </p>
+
+</section>
+
+<!-- FOOTER -->
+<footer>
+
+    <div class="copyright">
+        © 2026 Warisan Sejarah Malaysia |
+        Tugasan Kumpulan IML513 |
+        Hak Cipta Terpelihara
+    </div>
+
+</footer>
+
+<!-- =========================
+     SEJARAHBOT
+========================= -->
+
+<div id="chat-btn" onclick="openChat()">💬</div>
+
+<div id="chat-window">
+
+    <div class="chat-header">
+        <div class="header-info">
+            <div class="bot-avatar">🤖</div>
+
+            <div>
+                <div class="bot-name">SejarahBot</div>
+                <div class="bot-status">● Online</div>
+            </div>
+        </div>
+
+        <span id="close-chat">✕</span>
+    </div>
+
+    <!-- CHAT BODY -->
+    <div id="chatBody"></div>
+
+    <!-- INPUT AREA -->
+    <div class="chat-input-area">
+        <input type="text" id="userInput" placeholder="Taip soalan anda...">
+        <button onclick="sendMessage()">Hantar</button>
+    </div>
+
+</div>
+
+</div>
+
+<script>
+
+const chatBtn = document.getElementById("chat-btn");
+const chatWindow = document.getElementById("chat-window");
+const closeChat = document.getElementById("close-chat");
+const chatBody = document.getElementById("chatBody");
+const input = document.getElementById("userInput");
+
+closeChat.onclick = () => {
+    chatWindow.style.display = "none";
+};
+
+window.onload = function(){
+    document.getElementById("popupOverlay").style.display = "flex";
+}
+
+function closePopup(){
+    document.getElementById("popupOverlay").style.display = "none";
+}
+
+/* ENTER KEY */
+input.addEventListener("keypress", function(e){
+    if(e.key === "Enter"){
+        sendMessage();
+    }
+});
+
+function sendMessage(){
+
+    let message = input.value.toLowerCase().trim();
+
+    if(message === "") return;
+
+    /* USER MESSAGE */
+    chatBody.innerHTML += `
+    <div class="message user">
+        ${input.value}
+    </div>
+    `;
+
+    /* DEFAULT ANSWER */
+    let answer = `
+    <div class="bot-card">
+
+        <div class="bot-card-title">
+        🤔 Soalan Tidak Dikenali
+        </div>
+
+        <div class="bot-card-desc">
+
+        Maaf, saya tidak memahami soalan tersebut.
+
+        Sila hantar cadangan untuk penambahbaikan.
+
+        </div>
+
+        <div class="feedback-form">
+
+            <input type="text" placeholder="Nama anda" id="fbName">
+
+            <div class="select-wrapper">
+                <select id="tingkatan" name="tingkatan">
+                    <option value="Tingkatan 1">Tingkatan 1</option>
+                    <option value="Tingkatan 2">Tingkatan 2</option>
+                    <option value="Tingkatan 3">Tingkatan 3</option>
+                    <option value="Tingkatan 4">Tingkatan 4</option>
+                    <option value="Tingkatan 5">Tingkatan 5</option>
+                </select>
+            </div>
+
+            <textarea placeholder="Tulis soalan anda..." id="fbSoalan"></textarea>
+
+            <button onclick="submitFeedback()" class="chat-action-btn">
+                Hantar Soalan
+            </button>
+
+        </div>
+
+    </div>
+    `;
+    /* KEYWORD SYSTEM */
+    if(
+    message.includes("tokoh utama") ||
+    message.includes("tokoh") ||
+    message.includes("5 tokoh") ||
+    message.includes("tokoh negara")
+    ){
+    answer = `
+        <div class="bot-card">
+
+        <div class="bot-card-title">
+        🏛️ 5 Tokoh Utama Malaysia
+        </div>
+
+        <div class="bot-card-desc">
+
+        🇲🇾 Tunku Abdul Rahman<br>
+        🇲🇾 Tun Hussein Onn<br>
+        🇲🇾 Tun Dr Ismail Abdul Rahman<br>
+        🇲🇾 Tun Abdul Razak<br>
+        ⚔️ Hang Tuah
+
+        </div>
+
+        <button
+        onclick="window.location.href='tokoh.html'"
+        class="chat-action-btn">
+
+        📖 Lihat Semua →
+
+        </button>
+
+        </div>
+        `;
+    }
+    else if(
+    message.includes("abdul razak") ||
+    message.includes("tun razak") ||
+    message.includes("razak") ||
+    message.includes("bapa pembangunan luar bandar")
+    ){
+        answer = `
+        <div class="bot-card">
+
+        <div class="bot-card-title">
+        🏛️ Tun Abdul Razak Hussein
+        </div>
+
+        <div class="bot-card-desc">
+        Tokoh ini memainkan peranan penting dalam pembangunan negara dan dasar luar bandar.
+        </div>
+
+        <button
+        onclick="window.location.href='tokoh.html'"
+        class="chat-action-btn">
+
+        📖 Kenali Tokoh →
+
+        </button>
+
+        </div>
+    `;
+    }
+    else if(
+    message.includes("tunku") ||
+    message.includes("rahman") ||
+    message.includes("putra al-haj") ||
+    message.includes("bapa kemerdekaan") ||
+    message.includes("perdana menteri pertama")
+    ){
+    answer = `
+        <div class="bot-card">
+
+        <div class="bot-card-title">
+        🇲🇾 Tunku Abdul Rahman
+        </div>
+
+        <div class="bot-card-desc">
+
+        Tunku Abdul Rahman Putra Al-Haj merupakan
+        Perdana Menteri pertama Malaysia dan dikenali
+        sebagai Bapa Kemerdekaan.
+
+        Beliau mengetuai usaha mendapatkan
+        kemerdekaan daripada British pada tahun 1957.
+
+        </div>
+
+        <button
+        onclick="window.location.href='tokoh.html'"
+        class="chat-action-btn">
+
+        📖 Kenali Tokoh →
+
+        </button>
+
+        </div>
+        `;
+
+    }
+    else if(
+    message.includes("hussein onn") ||
+    message.includes("tun hussein") ||
+    message.includes("perdana menteri ke 3")
+    )
+    {
+    answer = `
+        <div class="bot-card">
+
+        <div class="bot-card-title">
+        🇲🇾 Tun Hussein Onn
+        </div>
+
+        <div class="bot-card-desc">
+
+        Tun Hussein Onn merupakan Perdana Menteri
+        Malaysia ketiga.
+
+        Beliau terkenal dengan usaha memupuk
+        perpaduan kaum dan dikenali sebagai
+        Bapa Perpaduan.
+
+        </div>
+
+        <button
+        onclick="window.location.href='tokoh.html'"
+        class="chat-action-btn">
+
+        📖 Kenali Tokoh →
+
+        </button>
+
+        </div>
+        `;
+    }
+    else if(
+    message.includes("tun dr ismail") ||
+    message.includes("dr ismail") ||
+    message.includes("ismail abdul rahman")
+    )
+    {
+    answer = `
+        <div class="bot-card">
+
+        <div class="bot-card-title">
+        🇲🇾 Tun Dr Ismail Abdul Rahman
+        </div>
+
+        <div class="bot-card-desc">
+
+        Tun Dr Ismail Abdul Rahman merupakan
+        Timbalan Perdana Menteri Malaysia yang kedua.
+
+        Beliau memainkan peranan penting dalam
+        mengekalkan kestabilan negara selepas
+        Peristiwa 13 Mei 1969.
+
+        </div>
+
+        <button
+        onclick="window.location.href='tokoh.html'"
+        class="chat-action-btn">
+
+        📖 Kenali Tokoh →
+
+        </button>
+
+        </div>
+        `;
+    }
+    else if(
+    message.includes("hang tuah") ||
+    message.includes("laksamana") ||
+    message.includes("melaka")
+    )
+    {
+    answer = `
+        <div class="bot-card">
+
+        <div class="bot-card-title">
+        ⚔️ Hang Tuah
+        </div>
+
+        <div class="bot-card-desc">
+
+        Hang Tuah merupakan laksamana terkenal
+        Kesultanan Melayu Melaka.
+
+        Beliau dikenali kerana keberanian,
+        kesetiaan dan kepahlawanannya dalam
+        mempertahankan Melaka.
+
+        </div>
+
+        <button
+        onclick="window.location.href='tokoh.html'"
+        class="chat-action-btn">
+
+        📖 Kenali Tokoh →
+
+        </button>
+
+        </div>
+        `;
+    }
+    else if(
+    message.includes("video") ||
+    message.includes("pembelajaran") ||
+    message.includes("bab") ||
+    message.includes("chapter") ||
+    message.includes("revision")
+    ){
+    answer = `
+        <div class="bot-card">
+
+        <div class="bot-card-title">
+        🎥 Video Pembelajaran
+        </div>
+
+        <div class="bot-card-desc">
+        Tonton video berkaitan sejarah Malaysia,
+        kemerdekaan dan tokoh-tokoh penting.
+        </div>
+
+        <button
+        onclick="window.location.href='galeri.html'"
+        class="chat-action-btn">
+
+        ▶️ Tonton Video →
+
+        </button>
+
+        </div>
+        `;
+    }
+    else if(
+    message.includes("kuiz") ||
+    message.includes("quiz") ||
+    message.includes("uji") ||
+    message.includes("ujian")
+    ){
+    answer = `
+        <div class="bot-card">
+
+            <div class="bot-card-title">
+                📚 Pilih Kuiz Mengikut Tingkatan
+            </div>
+
+            <div class="button-group">
+
+                <button class="chat-action-btn" onclick="bukaKuiz(1)">
+                    Tingkatan 1
+                </button>
+
+                <button class="chat-action-btn" onclick="bukaKuiz(2)">
+                    Tingkatan 2
+                </button>
+
+                <button class="chat-action-btn" onclick="bukaKuiz(3)">
+                    Tingkatan 3
+                </button>
+
+                <button class="chat-action-btn" onclick="bukaKuiz(4)">
+                    Tingkatan 4
+                </button>
+
+                <button class="chat-action-btn" onclick="bukaKuiz(5)">
+                    Tingkatan 5
+                </button>
+
+            </div>
+
+        </div>
+        `;
+    }
+    else if(
+    message.includes("peta") ||
+    message.includes("negeri")
+    ){
+    answer = `
+        <div class="bot-card">
+
+        <div class="bot-card-title">
+        🗺️ Peta Interaktif Malaysia
+        </div>
+
+        <div class="bot-card-desc">
+        Terokai negeri-negeri Malaysia dan lokasi
+        bersejarah melalui peta interaktif portal.
+        </div>
+
+        <button
+        onclick="window.location.href='peta.html'"
+        class="chat-action-btn">
+
+        🌏 Jelajah Peta →
+
+        </button>
+
+        </div>
+    `;
+    }
+    else if(
+    message.includes("tanya cikgu") ||
+    message.includes("soal cikgu") ||
+    message.includes("ask cikgu") ||
+    message.includes("guru sejarah") ||
+    message.includes("cikgu")
+    ){
+    answer = `
+        <div class="bot-card">
+
+            <div class="bot-card-title">
+                📩 Tanya Cikgu Sejarah
+            </div>
+
+            <div class="bot-card-desc">
+                Anda boleh hantar soalan terus kepada guru melalui halaman Hubungi.
+                Soalan anda akan direkod untuk tindakan lanjut.
+            </div>
+
+            <button
+                onclick="window.location.href='hubungi.html'"
+                class="chat-action-btn">
+
+                👨‍🏫 Tanya Cikgu →
+
+            </button>
+
+        </div>
+    `;
+    }
+    const typingId = "typing-" + Date.now();
+
+    chatBody.innerHTML += `
+        <div class="typing" id="${typingId}">
+        <span></span>
+        <span></span>
+        <span></span>
+        </div>
+    `;
+
+    chatBody.scrollTop = chatBody.scrollHeight;
+
+    setTimeout(() => {
+
+        document.getElementById(typingId).remove();
+
+    chatBody.innerHTML += `
+        <div class="message bot">
+            ${answer}
+        </div>
+    `;
+
+    chatBody.scrollTop = chatBody.scrollHeight;
+
+    },1500);
+
+    input.value = "";
+}
+/* ==========================
+   FEEDBACK FUNCTION
+========================== */
+function submitFeedback() {
+
+    const nama = document.querySelector("#fbName").value;
+    const tingkatan = document.querySelector("#tingkatan").value;
+    const soalan = document.querySelector("#fbSoalan").value;
+
+    fetch("https://script.google.com/macros/s/AKfycbxN8fxPylkpVimu2nJeeSr8XOTCY-WPVi13ner2sCb2z1IFIOLnHBhoXoQtxBu46TbK/exec", {
+        method: "POST",
+        body: new URLSearchParams({
+            nama,
+            tingkatan,
+            soalan
+        })
+    })
+    .then(res => res.text())
+    .then(data => {
+
+        console.log("RESPONSE:", data);
+
+        chatBody.innerHTML += `
+            <div class="message bot">
+                ✅ Berjaya hantar!
+            </div>
+        `;
+
+    })
+    .catch(err => {
+
+        console.log(err);
+
+        chatBody.innerHTML += `
+            <div class="message bot">
+                ❌ Gagal hantar.
+            </div>
+        `;
+    });
+}
+function bukaKuiz(tingkatan){
+
+    localStorage.setItem(
+        "tingkatanDipilih",
+        tingkatan
+    );
+
+    window.location.href = "kuiz.html";
+
+}
+function showWelcomeMessage(){
+
+    if (chatBody.innerHTML.trim() !== "") return;
+
+    chatBody.innerHTML = `
+        <div class="typing" id="welcomeTyping">
+            <span></span><span></span><span></span>
+        </div>
+    `;
+
+    setTimeout(() => {
+
+        const el = document.getElementById("welcomeTyping");
+        if (el) el.remove();
+
+        chatBody.innerHTML += `
+        <div class="message bot">
+            👋 Hai! Saya <b>SejarahBot</b>.
+            <br><br>
+            Saya boleh membantu anda mencari maklumat berkaitan:
+            <br><br>
+            🏛️ Tokoh Sejarah<br>
+            🗺️ Peta Malaysia<br>
+            🎥 Video Pembelajaran<br>
+            🖼️ Galeri Sejarah<br>
+            🎓 Kuiz Interaktif<br>
+            📞 Hubungi Guru
+        </div>
+        `;
+
+    }, 1500);
+}
+let welcomeShown = false;
+
+function openChat(){
+    chatWindow.style.display = "flex";
+
+    if (!welcomeShown) {
+        showWelcomeMessage();
+        welcomeShown = true;
+    }
+}
+let state = "home";
+</script>
+
+</body>
+</html>

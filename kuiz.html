@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SejarahWeb - Kuiz Sejarah</title>
+    <style>
+        /* --- PALET WARNA VINTAGE COKLAT & EMAS --- */
+        :root {
+            --bg-parchment: #f2e7d5;
+            --paper-white: #fffdf9;
+            --vintage-brown: #4a2c11;
+            --leather-dark: #2a1405;
+            --accent-gold: #b8860b;
+            --bright-gold: #dfb15b;
+            --text-dark: #2d1e18;
+            --text-muted: #6e473b;
+            --correct-green: #1b5e20;
+            --wrong-red: #b71c1c;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-parchment);
+            background-image: radial-gradient(rgba(0,0,0,0.03) 1px, transparent 0);
+            background-size: 24px 24px;
+            color: var(--text-dark);
+            font-family: 'Georgia', 'Times New Roman', serif;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* --- NAVIGATION BAR --- */
+        nav {
+            background-color: var(--leather-dark);
+            border-bottom: 3px solid var(--accent-gold);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-area {
+            color: var(--bg-parchment);
+            font-weight: bold;
+            font-size: 1.3rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-area span {
+            color: var(--accent-gold);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #d7ccc8;
+            text-decoration: none;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent-gold);
+            border-bottom: 2px solid var(--accent-gold);
+            padding-bottom: 5px;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            background: linear-gradient(rgba(42, 20, 5, 0.8), rgba(26, 12, 3, 0.95)), 
+                        url('https://upload.wikimedia.org/wikipedia/commons/e/ea/Kuala_Lumpur_at_night_from_the_sky.jpg') no-repeat center center/cover;
+            height: 220px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--bg-parchment);
+            padding: 20px;
+            border-bottom: 4px double var(--bright-gold);
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.8);
+        }
+
+        .hero h2 {
+            font-size: 2.4rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--bright-gold);
+        }
+
+        /* --- PAGE SYSTEM --- */
+        .page-content {
+            display: none;
+        }
+
+        .page-content.active-page {
+            display: block;
+        }
+
+        /* --- KUIZ PAGE LAYOUT --- */
+        .kuiz-page-container {
+            max-width: 900px;
+            margin: 40px auto 60px;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        .kuiz-page-container::before {
+            content: "📜 Jom Cuba Jawab!";
+            position: absolute;
+            top: -15px;
+            right: 40px;
+            background-color: var(--accent-gold);
+            color: #fff;
+            padding: 3px 15px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+            border-radius: 3px;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.15);
+            z-index: 5;
+        }
+
+        .kuiz-card-box {
+            background-color: var(--paper-white);
+            background-image: linear-gradient(rgba(242, 231, 213, 0.15) 1px, transparent 1px);
+            background-size: 100% 2rem;
+            border: 2px solid var(--vintage-brown);
+            outline: 6px double var(--bright-gold);
+            outline-offset: -12px;
+            border-radius: 8px;
+            padding: 45px 50px;
+            box-shadow: 0 10px 25px rgba(42, 20, 5, 0.15);
+        }
+
+        .tingkatan-selector {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 35px;
+            padding-bottom: 15px;
+            border-bottom: 2px double var(--accent-gold);
+        }
+
+        .tingkatan-btn {
+            background-color: #efe5d0;
+            border: 1px solid var(--vintage-brown);
+            color: var(--leather-dark);
+            padding: 10px 18px;
+            font-family: 'Georgia', serif;
+            font-weight: bold;
+            font-size: 0.9rem;
+            cursor: pointer;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
+        }
+
+        .tingkatan-btn:hover {
+            background-color: var(--bright-gold);
+            color: var(--leather-dark);
+            transform: translateY(-2px);
+        }
+
+        .tingkatan-btn.active {
+            background-color: var(--vintage-brown);
+            color: var(--paper-white);
+            border-color: var(--bright-gold);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.25);
+        }
+
+        .soalan-container {
+            background-color: #fbf7ef;
+            border: 1px dashed var(--accent-gold);
+            border-left: 5px solid var(--vintage-brown);
+            padding: 30px;
+            border-radius: 4px;
+            position: relative;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+        }
+
+        .soalan-container::after {
+            content: "🏛️";
+            position: absolute;
+            bottom: 10px;
+            right: 15px;
+            font-size: 3.5rem;
+            opacity: 0.05;
+            pointer-events: none;
+        }
+
+        .soalan-text {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: var(--leather-dark);
+            margin-bottom: 25px;
+            line-height: 1.5;
+            border-bottom: 1px solid #ebdcb9;
+            padding-bottom: 15px;
+        }
+
+        .pilihan-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .pilihan-item {
+            background-color: var(--paper-white);
+            border: 1px solid #d3c4a8;
+            border-radius: 6px;
+            padding: 15px 20px;
+            cursor: pointer;
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+        }
+
+        .pilihan-item:hover {
+            background-color: #f7f1e3;
+            border-color: var(--vintage-brown);
+            transform: translateX(5px);
+        }
+
+        .pilihan-item.selected-correct {
+            background-color: #e8f5e9 !important;
+            border-color: var(--correct-green) !important;
+            color: var(--correct-green);
+            font-weight: bold;
+            box-shadow: inset 4px 0 0 var(--correct-green);
+        }
+
+        .pilihan-item.selected-wrong {
+            background-color: #ffebee !important;
+            border-color: var(--wrong-red) !important;
+            color: var(--wrong-red);
+            font-weight: bold;
+            box-shadow: inset 4px 0 0 var(--wrong-red);
+        }
+
+        .feedback-box {
+            margin-top: 25px;
+            padding: 15px;
+            display: none;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+            border-radius: 4px;
+            border: 1px solid transparent;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .quiz-control-area {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 35px;
+            padding-top: 20px;
+            border-top: 1px dashed var(--accent-gold);
+        }
+
+        .score-badge-box {
+            background-color: var(--leather-dark);
+            color: var(--bright-gold);
+            padding: 8px 18px;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border: 1px solid var(--accent-gold);
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.15);
+        }
+
+        .action-btn {
+            background-color: var(--vintage-brown);
+            color: var(--bg-parchment);
+            border: 1px solid var(--bright-gold);
+            border-radius: 4px;
+            padding: 12px 28px;
+            font-family: 'Georgia', serif;
+            font-size: 0.95rem;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 3px 3px 6px rgba(0,0,0,0.2);
+            transition: all 0.2s ease;
+        }
+
+        .action-btn:hover {
+            background-color: var(--bright-gold);
+            color: var(--leather-dark);
+            transform: translateY(-1px);
+        }
+
+       footer {
+            background-color: var(--leather-dark);
+            color: #d7ccc8;
+            padding: 50px 5% 20px;
+            border-top: 4px double var(--accent-gold);
+        }
+
+        .copyright {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #8d6e63;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV BAR -->
+    <nav>
+        <div class="logo-area">
+            🏛️ KUIZ <span> MINDA </span>
+        </div>
+        <ul class="nav-links">
+            <li><a id="nav-utama" href="index.html" onclick="tukarHalaman('utama')">Utama</a></li>
+            <li><a id="nav-tokoh" href="tokoh.html" onclick="tukarHalaman('tokoh')">Tokoh</a></li>
+            <li><a id="nav-peta" href="peta.html" onclick="tukarHalaman('peta')">Peta</a></li>
+            <li><a id="nav-galeri" href="gallery.html" onclick="tukarHalaman('galeri')">Galeri</a></li>
+            <li><a id="nav-kuiz" class="active" href="#" onclick="tukarHalaman('kuiz')">Kuiz</a></li>
+            <li><a id="nav-hubungi" href="hubungi.html" onclick="tukarHalaman('hubungi')">Hubungi</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header class="hero">
+        <h2 id="hero-title">Kuiz Minda Sejarah</h2>
+        <p id="hero-desc">Sistem soalan objektif komprehensif mengikut standard silibus.</p>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main>
+        <!-- SEKSYEN KUIZ KREATIF -->
+        <div id="page-kuiz" class="page-content active-page">
+            <div class="kuiz-page-container">
+                <div class="kuiz-card-box">
+                    
+                    <!-- Pemilih Tingkatan -->
+                    <div class="tingkatan-selector">
+                        <button class="tingkatan-btn active" onclick="tukarTingkatan(1)">📜 Tingkatan 1</button>
+                        <button class="tingkatan-btn" onclick="tukarTingkatan(2)">📜 Tingkatan 2</button>
+                        <button class="tingkatan-btn" onclick="tukarTingkatan(3)">📜 Tingkatan 3</button>
+                        <button class="tingkatan-btn" onclick="tukarTingkatan(4)">📜 Tingkatan 4</button>
+                        <button class="tingkatan-btn" onclick="tukarTingkatan(5)">📜 Tingkatan 5</button>
+                    </div>
+
+                    <!-- Kotak Soalan Pokok -->
+                    <div class="soalan-container">
+                        <div class="soalan-text" id="question-text">Memuatkan teks manuskrip soalan...</div>
+                        <ul class="pilihan-list" id="options-block"></ul>
+                    </div>
+
+                    <!-- Kotak Keputusan Semakan Semasa -->
+                    <div class="feedback-box" id="feedback-block"></div>
+
+                    <!-- Kawalan & Papan Skor -->
+                    <div class="quiz-control-area">
+                        <div class="score-badge-box" id="score-board">Skor Semasa: 0 / 0</div>
+                        <button class="action-btn" onclick="kemajuanSoalan()">Seterusnya Minda ➔</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- SEKSYEN KANDUNGAN UNTUK NAVIGASI LAIN (PROJEK IML513) -->
+        <div id="page-utama" class="page-content" style="padding: 50px; text-align: center;">
+            <h3>Selamat Datang ke Portal Sejarah Warisan</h3>
+            <p>Pusat dokumentasi, rujukan kronologi, dan penilaian kendiri digital.</p>
+        </div>
+        
+        <div id="page-tokoh" class="page-content" style="padding: 50px; text-align: center;">
+            <h3>Galeri Tokoh Pahlawan</h3>
+            <p>Mengenali pejuang kedaulatan tanah air moden dan tradisi.</p>
+        </div>
+
+        <div id="page-peta" class="page-content" style="padding: 50px; text-align: center;">
+            <h3>Peta Bersejarah</h3>
+            <p>Modul pemetaan dan eksplorasi lokasi bersejarah Tanah Melayu.</p>
+        </div>
+
+        <div id="page-galeri" class="page-content" style="padding: 50px; text-align: center;">
+            <h3>Galeri Arkib Visual</h3>
+            <p>Koleksi gambar, dokumen lama, dan artifak digital warisan negara.</p>
+        </div>
+
+        <div id="page-hubungi" class="page-content" style="padding: 50px; text-align: center;">
+            <h3>Hubungi Kami</h3>
+            <p>Urusan berkaitan Tugasan Pengurusan Rekod IML513.</p>
+        </div>
+    </main>
+
+    <footer>
+        <div class="copyright">
+            © 2026 Tokoh Sejarah Malaysia. Hak Cipta Terpelihara. Rekaan Tugasan Kumpulan IML513.
+        </div>
+    </footer>
+    <script>
+        // --- PANGKALAN DATA 150 SOALAN ---
+        const bankSoalan = {
+            1: [
+                { soalan: "Apakah maksud perkataan Sejarah yang berasal daripada istilah Arab, syajaratun?", pilihan: ["Riwayat hidup", "Salasilah atau pohon kembangan", "Zaman purbakala"], jawapan: 1 },
+                { soalan: "Menurut pandangan sejarawan Herodotus, sejarah bermaksud...", pilihan: ["Tindak balas manusia terhadap peristiwa", "Cerita tentang pusingan hidup manusia", "Penceritaan tentang tindakan manusia dan sebab mereka melakukannya"], jawapan: 2 },
+                { soalan: "Antara berikut, yang manakah dikelaskan sebagai sumber primer?", pilihan: ["Majalah lama", "Manuskrip asal, artifak, dan fosil", "Buku teks sejarah semasa"], jawapan: 1 },
+                { soalan: "Apakah kaedah sejarah yang menggunakan kaedah temu bual dan rakaman audio?", pilihan: ["Kaedah lisan", "Kaedah bertulis", "Kaedah arkeologi"], jawapan: 0 },
+                { soalan: "Kaedah arkeologi maritim dijalankan untuk mengkaji tinggalan purba di kawasan...", pilihan: ["Gua batu kapur", "Bawah dasar laut atau perairan", "Kawasan tanah runtuh"], jawapan: 1 },
+                { soalan: "Ruang masa dalam sejarah yang merangkumi tempoh 10 tahun dikenali sebagai...", pilihan: ["Satu Dekad", "Satu Abad", "Satu Alaf"], jawapan: 0 },
+                { soalan: "Satu abad dalam sistem pengiraan masa bersamaan dengan berapa tahun?", pilihan: ["50 tahun", "100 tahun", "1000 tahun"], jawapan: 1 },
+                { soalan: "Zaman Air Batu Akhir berlaku dalam dua epok geologi utama iaitu...", pilihan: ["Pleistosen dan Holosen", "Miosen dan Pliosen", "Arkaik dan Kamra"], jawapan: 0 },
+                { soalan: "Apakah kesan utama proses pengglasieran (pencairan air batu) terhadap Asia Tenggara?", pilihan: ["Suhu menjadi semakin beku", "Kenaikan paras air laut membentuk Pentas Sunda", "Kawasan daratan menjadi kering kontang"], jawapan: 1 },
+                { soalan: "Apakah nama kawasan daratan luas yang menghubungkan pulau-pulau di Asia Tenggara pada Zaman Air Batu?", pilihan: ["Pentas Sahul", "Pentas Sunda", "Gondwana"], jawapan: 1 },
+                { soalan: "Apakah ciri utama kehidupan manusia pada Zaman Paleolitik?", pilihan: ["Hidup nomad, memburu binatang, dan tinggal di dalam gua", "Menetap dalam komuniti besar dan bercocok tanam", "Mencipta peralatan logam berkilat"], jawapan: 0 },
+                { soalan: "Lokasi prasejarah terkenal di Malaysia yang menempatkan bukti rangka 'Perak Man' ialah...", pilihan: ["Gua Niah, Sarawak", "Lembah Lenggong, Perak", "Gua Cha, Kelantan"], jawapan: 1 },
+                { soalan: "Apakah kemajuan teknologi terbesar yang dicapai oleh manusia pada Zaman Neolitik?", pilihan: ["Penggunaan kapak batu kasar", "Pembuatan tembikar, penempatan kekal, dan pertanian", "Peleburan gangsa dan besi"], jawapan: 1 },
+                { soalan: "Manusia mula mencipta peralatan seperti kapak corong dan sabit pada zaman...", pilihan: ["Zaman Paleolitik", "Zaman Mesolitik", "Zaman Logam"], jawapan: 2 },
+                { soalan: "Istilah 'Tamadun' dalam bahasa Yunani berasal daripada perkataan civitas yang membawa maksud...", pilihan: ["Undang-undang raja", "Bandar atau kota", "Bercocok tanam"], jawapan: 1 },
+                { soalan: "Dalam perspektif Islam, konsep tamadun menekankan pembangunan dari segi...", pilihan: ["Lahiriah dan rohaniah (kebendaan dan tatasusila)", "Pembinaan bangunan tinggi sahaja", "Kekuatan ketenteraan empayar"], jawapan: 0 },
+                { soalan: "Apakah faktor utama petempatan awal tamadun manusia tertumpu di lembah sungai?", pilihan: ["Mudah melarikan diri daripada serangan musuh", "Membekalkan tanah subur, sumber air, dan pengangkutan", "Kawasan yang lebih sejuk"], jawapan: 1 },
+                { soalan: "Tamadun Mesopotamia berkembang pesat di lembah antara dua buah sungai utama, iaitu...", pilihan: ["Sungai Nil dan Sungai Indus", "Sungai Tigris dan Sungai Euphrates", "Sungai Kuning"], jawapan: 1 },
+                { soalan: "Apakah kod undang-undang terkenal yang dicipta oleh Raja Mesopotamia untuk mengawal kehidupan rakyat?", pilihan: ["Kod Undang-Undang Hammurabi", "Hukum Kanun Rakyat", "Undang-Undang Dua Belas Kolom"], jawapan: 0 },
+                { soalan: "Sistem tulisan hieroglif merupakan sumbangan agung daripada tamadun purba mana?", pilihan: ["Tamadun Mesopotamia", "Tamadun Mesir Purba", "Tamadun Indus"], jawapan: 1 },
+                { soalan: "Piramid agung Giza dibina khusus dalam Tamadun Mesir Purba sebagai...", pilihan: ["Kubu pertahanan tentera", "Makam diraja firaun", "Pusat perniagaan tekstil"], jawapan: 1 },
+                { soalan: "Ciri utama bandar terancang Mohenjo-Daro dan Harappa dalam Tamadun Indus ialah...", pilihan: ["Mempunyai sistem saliran air dan susunan blok perumahan yang sistematik", "Dikelilingi oleh dinding kayu balak", "Dibina di atas puncak gunung berapi"], jawapan: 0 },
+                { soalan: "Tamadun Huang He (Sungai Kuning) dipengaruhi oleh sistem pemerintahan beraja yang mengamalkan konsep...", pilihan: ["Demokrasi mutlak", "Mandat dari Syurga", "Sistem Republik Persekutuan"], jawapan: 1 },
+                { soalan: "Sistem pemerintahan Yunani kuno di Athens memulakan asas pemerintahan moden hari ini, iaitu...", pilihan: ["Sistem Monarki", "Sistem Demokrasi", "Sistem Oligarki"], jawapan: 1 },
+                { soalan: "Apakah bandar di Yunani yang terkenal sebagai sebuah negara kota tentera yang berdisiplin tinggi?", pilihan: ["Sparta", "Athens", "Corinth"], jawapan: 0 },
+                { soalan: "Hukum Dua Belas merupakan sistem perundangan bertulis yang terkenal dalam tamadun...", pilihan: ["Tamadun Rom", "Tamadun Yunani", "Tamadun China"], jawapan: 0 },
+                { soalan: "Monumen Rom kuno yang digunakan sebagai gelanggang pertandingan pahlawan (gladiator) ialah...", pilihan: ["Parthenon", "Colosseum", "Pantheon"], jawapan: 1 },
+                { soalan: "Apakah binaan sepanjang 2,1196 kilometer di China yang dibina untuk mempertahankan empayar daripada serangan luar?", pilihan: ["Tembok Besar China", "Kota Larangan", "Terusan Besar"], jawapan: 0 },
+                { soalan: "Sistem peperiksaan awam kuno di China yang sangat ketat dilaksanakan bertujuan untuk memilih...", pilihan: ["Pegawai kerajaan/birokrat yang layak dan bijaksana", "Panglima tentera barisan hadapan", "Saudagar laut antarabangsa"], jawapan: 0 },
+                { soalan: "Berdasarkan aspek geografi, tamadun awal dunia kebanyakannya lahir di kawasan bertopografi...", pilihan: ["Lembah sungai dan dataran banjir yang subur", "Kawasan pergunungan tinggi", "Pulau terpencil"], jawapan: 0 }
+            ],
+            2: [
+                { soalan: "Apakah maksud istilah 'Alam Melayu' dari sudut geografi?", pilihan: ["Kawasan kepulauan yang meliputi gugusan tanah subur di Asia Tenggara", "Kawasan di sekitar benua Eropah", "Sempadan geografi negara China purba"], jawapan: 0 },
+                { soalan: "Kerajaan Alam Melayu yang terawal sekali muncul dalam lipatan sejarah ialah...", pilihan: ["Kerajaan Funan", "Kerajaan Champa", "Kerajaan Srivijaya"], jawapan: 0 },
+                { soalan: "Siapakah yang mengasaskan Kerajaan Angkor di Asia Tenggara?", pilihan: ["Jayavarman II", "Suryavarman II", "Fan Shih-man"], jawapan: 0 },
+                { soalan: "Pusat pemerintahan Kerajaan Srivijaya terletak di mana?", pilihan: ["Palembang", "Oc Eo", "Hariharalaya"], jawapan: 0 },
+                { soalan: "Monumen Angkor Wat merupakan bukti kegemilangan seni bina bagi kerajaan...", pilihan: ["Angkor", "Champa", "Majapahit"], jawapan: 0 },
+                { soalan: "Kerajaan Majapahit mencapai kemuncak kegemilangan hasil kebijaksanaan Perdana Menterinya iaitu...", pilihan: ["Gajah Mada", "Raden Wijaya", "Patih Logender"], jawapan: 0 },
+                { soalan: "Pelabuhan utama bagi Kerajaan Kedah Tua terletak di kawasan lembah yang kaya besi iaitu...", pilihan: ["Lembah Bujang", "Pangkalan Bujang", "Kuala Selinsing"], jawapan: 0 },
+                { soalan: "Apakah agama awal yang dianuti oleh sebahagian besar masyarakat Kerajaan Funan dan Angkor?", pilihan: ["Hindu dan Buddha", "Islam", "Animisme"], jawapan: 0 },
+                { soalan: "Apakah aktiviti ekonomi utama bagi masyarakat Kerajaan Champa dan Majapahit?", pilihan: ["Pertanian padi dan perdagangan maritim", "Perkilangan tekstil berat", "Perlombongan emas bawah tanah"], jawapan: 0 },
+                { soalan: "Siapakah pengasas yang membuka Kesultanan Melayu Melaka pada sekitar tahun 1400?", pilihan: ["Parameswara", "Sultan Muzaffar Shah", "Megat Iskandar Shah"], jawapan: 0 },
+                { soalan: "Apakah nama pokok tempat Parameswara bersandar sebelum menamakan Melaka?", pilihan: ["Pokok Melaka", "Pokok Bakau", "Pokok Jati"], jawapan: 0 },
+                { soalan: "Apakah faktor utama Melaka berkembang menjadi sebuah pelabuhan emporium antarabangsa?", pilihan: ["Kedudukan strategik di Selat Melaka dan sistem angin monsun", "Melaka mempunyai ladang gandum terbesar", "British membina pangkalan tentera laut besar"], jawapan: 0 },
+                { soalan: "Apakah peranan jawatan 'Bendahara' dalam struktur pemerintahan Kesultanan Melayu Melaka?", pilihan: ["Ketua Pentadbir, Penasihat Raja dan Pemangku Sultan", "Ketua Angkatan Laut negara", "Pengutip cukai di pintu pelabuhan"], jawapan: 0 },
+                { soalan: "Jawatan 'Laksamana' dalam Kesultanan Melayu Melaka bertugas sebagai...", pilihan: ["Ketua angkatan laut dan utusan rasmi diraja", "Hakim Mahkamah Jenayah", "Pengawal khazanah perbendaharaan negara"], jawapan: 0 },
+                { soalan: "Apakah dua dokumen undang-undang bertulis utama yang digubal pada zaman Kesultanan Melayu Melaka?", pilihan: ["Hukum Kanun Melaka dan Undang-Undang Laut Melaka", "Undang-Undang Pahang dan Kedah", "Piagam Jakarta"], jawapan: 0 },
+                { soalan: "Siapakah tokoh pahlawan terbilang Melaka yang memegang gelaran Laksamana pada zaman Sultan Mansur Shah?", pilihan: ["Hang Tuah", "Hang Jebat", "Tun Perak"], jawapan: 0 },
+                { soalan: "Melaka jatuh ke tangan kuasa penjajah asing barat yang pertama iaitu Portugis pada tahun berapakah?", pilihan: ["1511", "1641", "1824"], jawapan: 0 },
+                { soalan: "Siapakah Sultan Melaka terakhir yang terpaksa berundur selepas serangan Portugis?", pilihan: ["Sultan Mahmud Shah", "Sultan Ahmad Shah", "Sultan Alauddin Riayat Shah"], jawapan: 0 },
+                { soalan: "Kesultanan Johor Riau telah diasaskan oleh putera Sultan Melaka yang bernama...", pilihan: ["Sultan Alauddin Riayat Shah II", "Sultan Muzaffar Shah", "Sultan Abdul Jalil Shah"], jawapan: 0 },
+                { soalan: "Apakah taktik ketenteraan yang digunakan oleh Johor untuk mempertahankan kubunya daripada serangan Portugis dan Acheh?", pilihan: ["Membina kota pertahanan seperti Kota Kara dan Kota Sayong", "Menggunakan kapal terbang pejuang", "Menyerah kalah tanpa syarat"], jawapan: 0 },
+                { soalan: "Golongan manakah yang membantu mengukuhkan pemerintahan Kesultanan Johor Riau bermula abad ke-18?", pilihan: ["Orang Bugis Lima Bersaudara", "Tentera Belanda", "Syarikat Hindia Timur Inggeris"], jawapan: 0 },
+                { soalan: "Apakah karya sastera sejarah agung terpenting yang ditulis oleh Tun Sri Lanang di Johor?", pilihan: ["Sulalatus Salatin (Sejarah Melayu)", "Hikayat Hang Tuah", "Tuhfat al-Nafis"], jawapan: 0 },
+                { soalan: "Kesultanan Perak diasaskan oleh Sultan Muzaffar Shah yang merupakan putera kepada...", pilihan: ["Sultan Mahmud Shah (Sultan Melaka terakhir)", "Sultan Alauddin Riayat Shah II", "Raja Ali"], jawapan: 0 },
+                { soalan: "Kesultanan Pahang moden diasaskan oleh keturunan keluarga bendahara, berpunca daripada peristiwa kemangkatan...", pilihan: ["Sultan Mahmud Shah II (Mangkat Diulang)", "Sultan Ahmad Al-Muadzam Shah", "Sultan Abdul Jalil"], jawapan: 0 },
+                { soalan: "Sultan manakah yang terkenal mengasaskan Kesultanan Terengganu pada tahun 1708?", pilihan: ["Sultan Zainal Abidin I", "Sultan Mansur Shah II", "Sultan Baginda Omar"], jawapan: 0 },
+                { soalan: "Siapakah kumpulan etnik yang mula-mula membentuk sistem pemerintahan awal di Negeri Sembilan?", pilihan: ["Masyarakat Minangkabau dari Sumatera", "Suku Kaum Murut", "Suku Iban"], jawapan: 0 },
+                { soalan: "Apakah sistem adat unik yang diamalkan di Negeri Sembilan yang menekankan garis keturunan ibu?", pilihan: ["Adat Perpatih", "Adat Temenggung", "Adat Islam Syarak"], jawapan: 0 },
+                { soalan: "Apakah barangan eksport utama dari negeri Perak, Selangor, dan Sungai Ujong yang menjadi rebutan pelabur luar?", pilihan: ["Bijih timah", "Gandum", "Rempah ratus cengkih"], jawapan: 0 },
+                { soalan: "Perlis mula mendapat pengiktirafan sebagai sebuah negeri berdaulat berasingan daripada Kedah akibat daripada pengaruh...", pilihan: ["Penjajahan dan pelantikan oleh Raja Siam", "Serangan British", "Perjanjian Pangkor 1874"], jawapan: 0 },
+                { soalan: "Apakah nama undang-undang tubuh bagi negeri Johor yang digubal oleh Sultan Abu Bakar pada tahun 1895?", pilihan: ["Undang-Undang Tubuh Kerajaan Johor", "Undang-Undang Afzan", "Hukum Kanun Johor"], jawapan: 0 }
+            ],
+            3: [
+                { soalan: "Apakah faktor utama kuasa Barat seperti British, Belanda, dan Perancis tertarik untuk menguasai negara kita?", pilihan: ["Kekayaan bahan mentah, kedudukan pelabuhan strategik, dan revolusi industri", "Membina pusat pelancongan moden", "Menghapuskan sistem beraja sepenuhnya"], jawapan: 0 },
+                { soalan: "Syarikat Hindia Timur Inggeris (SHTI) berjaya menduduki Pulau Pinang pada tahun 1786 menerusi tipu helah tokoh...", pilihan: ["Francis Light", "Stamford Raffles", "William Farquhar"], jawapan: 0 },
+                { soalan: "Syarikat Hindia Timur Inggeris menguasai Singapura pada tahun 1819 untuk bersaing dengan kuasa barat...", pilihan: ["Belanda di Betawi", "Sepanyol di Manila", "Perancis di Indochina"], jawapan: 0 },
+                { soalan: "Apakah nama wilayah pentadbiran gabungan yang merangkumi Pulau Pinang, Singapura, dan Melaka pada tahun 1826?", pilihan: ["Negeri-Negeri Selat (NNS)", "Negeri-Negeri Melayu Bersekutu", "Kesatuan Malaya"], jawapan: 0 },
+                { soalan: "Perjanjian penting manakah yang ditandatangani pada tahun 1824 bagi membahagikan pengaruh British dan Belanda di Alam Melayu?", pilihan: ["Perjanjian Inggeris-Belanda 1824", "Perjanjian Pangkor 1874", "Perjanjian Bangkok 1909"], jawapan: 0 },
+                { soalan: "Apakah peristiwa di Perak yang membawa kepada campur tangan rasmi British menerusi Perjanjian Pangkor 1874?", pilihan: ["Perebutan takhta kesultanan dan perang saudara kongsi gelap pelombong", "Serangan daripada tentera Siam", "Kekurangan bekalan makanan"], jawapan: 0 },
+                { soalan: "Siapakah Residen British pertama di Perak yang akhirnya dibunuh di Pasir Salak akibat keangkuhannya?", pilihan: ["J.W.W. Birch", "Frank Swettenham", "Hugh Low"], jawapan: 0 },
+                { soalan: "Sistem Residen mula diperkenalkan di empat buah negeri Melayu. Apakah nama gabungan empat buah negeri tersebut pada tahun 1895?", pilihan: ["Negeri-Negeri Melayu Bersekutu (NNMB)", "Negeri-Negeri Melayu Tidak Bersekutu", "Negeri-Negeri Selat"], jawapan: 0 },
+                { soalan: "Manakah antara berikut mengandungi senarai penuh empat buah negeri dalam NNMB?", pilihan: ["Perak, Selangor, Negeri Sembilan, dan Pahang", "Kedah, Perlis, Kelantan, dan Terengganu", "Pulau Pinang, Melaka, Sabah, dan Sarawak"], jawapan: 0 },
+                { soalan: "Menerusi Perjanjian Bangkok 1909, negeri Kedah, Perlis, Kelantan, dan Terengganu diserahkan oleh Siam kepada...", pilihan: ["British", "Belanda", "Perancis"], jawapan: 0 },
+                { soalan: "Apakah jawatan penasihat barat yang diletakkan di bawah sistem pentadbiran Negeri-Negeri Melayu Tidak Bersekutu?", pilihan: ["Penasihat British", "Residen Jeneral", "Gabenor Jeneral"], jawapan: 0 },
+                { soalan: "Siapakah pengasas berbangsa Inggeris yang memulakan era pemerintahan dinasti 'Raja Putih' di Sarawak?", pilihan: ["James Brooke", "Charles Brooke", "Charles Vyner Brooke"], jawapan: 0 },
+                { soalan: "Apakah syarikat piagam British yang diberi hak oleh kerajaan Britain untuk mentadbir wilayah Sabah (Borneo Utara)?", pilihan: ["Syarikat Borneo Utara British (SBUB)", "Syarikat Hindia Timur Inggeris", "Syarikat Royal Dutch"], jawapan: 0 },
+                { soalan: "Dol Said mengetuai penentangan angkatan tentera tempatan terhadap British di wilayah mana?", pilihan: ["Naning", "Rembau", "Klang"], jawapan: 0 },
+                { soalan: "Apakah punca utama kebangkitan Dol Said menentang penguasaan British di Naning?", pilihan: ["British memaksa Naning membayar ufti hasil sebanyak 1/10", "British melarang pembinaan masjid", "British menangkap pembesar istana"], jawapan: 0 },
+                { soalan: "Siapakah tokoh pembesar Perak yang merancang dan mengetuai pakatan membunuh J.W.W. Birch di Pasir Salak?", pilihan: ["Dato' Maharajalela dan Dato' Sagor", "Raja Abdullah", "Ngah Ibrahim"], jawapan: 0 },
+                { soalan: "Pahlawan Pahang yang mengetuai perang gerila menentang pengenalan cukai tanah oleh British ialah...", pilihan: ["Dato' Bahaman", "Mat Kilau", "Tok Gajah"], jawapan: 0 },
+                { soalan: "Apakah gelaran pahlawan Iban bernama Rentap yang bermaksud 'pemberontak dunia' selepas memusnahkan kubu James Brooke?", pilihan: ["Raja Darat / Libau", "Panglima Hitam", "Bujang Berani"], jawapan: 0 },
+                { soalan: "Apakah nama kubu James Brooke yang diserang oleh Rentap di Nanga Skrang pada tahun 1853?", pilihan: ["Kubu James", "Fort Alice", "Kubu Kuching"], jawapan: 0 },
+                { soalan: "Siapakah pemimpin tempatan Sabah yang membakar kubu SBUB di Pulau Gaya dan membina kubu kuat di Ranau?", pilihan: ["Mat Salleh", "Antanom", "Datu Mustapha"], jawapan: 0 },
+                { soalan: "Kebangkitan pahlawan kaum Murut di Rundum, Sabah pada tahun 1915 dipimpin oleh...", pilihan: ["Antanom", "Mat Sator", "Albert Kwok"], jawapan: 0 },
+                { soalan: "Tok Janggut mengetuai penentangan bersenjata menentang British di Pasir Puteh, Kelantan disebabkan isu...", pilihan: ["Pengenalan sistem cukai kepala dan cukai tanah yang membebankan", "British melarang perdagangan beras", "Perebutan kawasan perlombongan emas"], jawapan: 0 },
+                { soalan: "Apakah nama sebenar Tok Janggut, pahlawan syahid di Kelantan?", pilihan: ["Haji Mohd Hassan bin Munas", "Haji Abdul Rahman", "Nik Ali"], jawapan: 0 },
+                { soalan: "Kebangkitan Tani di Terengganu pada tahun 1928 digerakkan oleh seorang ulama terkenal iaitu...", pilihan: ["Haji Abdul Rahman Limbong", "Tok Ku Paloh", "Sayyid Abdul Rahman"], jawapan: 0 },
+                { soalan: "Apakah hujah undang-undang yang digunakan oleh Haji Abdul Rahman Limbong untuk mempertahankan hak tanah penduduk tempatan?", pilihan: ["Tanah adalah milik Allah dan kerajaan tiada hak mengutip cukai", "Tanah adalah hak milik mutlak Sultan Terengganu sahaja", "Rakyat telah membayar ufti kepada Siam"], jawapan: 0 },
+                { soalan: "Apakah matlamat penubuhan Lembaga Pesuruhjaya Durbar bagi Negeri-Negeri Melayu Bersekutu?", pilihan: ["Memberi platform perbincangan antara Raja-Raja Melayu dan pihak British", "Menguruskan pendaftaran imigran", "Menubuhkan pasukan tentera udara"], jawapan: 0 },
+                { soalan: "Apakah kesan pengenalan ekonomi moden British terhadap struktur masyarakat di Tanah Melayu?", pilihan: ["Kemunculan masyarakat majmuk akibat kemasukan buruh dari China dan India", "Masyarakat tempatan menjadi kaya-raya secara mendadak", "Sistem ekonomi sara diri pupus sepenuhnya"], jawapan: 0 },
+                { soalan: "Apakah nama sistem pengambilan buruh dari China yang diuruskan oleh ejen swasta untuk bekerja di lombong bijih timah?", pilihan: ["Sistem Kontrak / Sistem Kangchu", "Sistem Kangani", "Sistem Buruh Bebas"], jawapan: 0 },
+                { soalan: "Sistem Kangani merupakan kaedah yang digunakan bagi membawa masuk buruh dari negara...", pilihan: ["India untuk bekerja di ladang getah", "China untuk bekerja di ladang lada hitam", "Jawa untuk bekerja di bendang padi"], jawapan: 0 },
+                { soalan: "Enakmen Tanah Simpanan Melayu 1913 diperkenalkan oleh British bermatlamat untuk...", pilihan: ["Menyekat tanah milik orang Melayu daripada dijual atau dipindah milik kepada orang asing", "Merampas semua tanah pesawah", "Membuka kawasan bandar metropolitan baharu"], jawapan: 0 }
+            ],
+            4: [
+                { soalan: "Apakah maksud 'nasionalisme' dari segi konsep sejarah?", pilihan: ["Perasaan cinta yang mendalam terhadap bangsa dan tanah air serta gerakan membebaskan diri daripada penjajahan", "Gerakan menyokong kemasukan syarikat asing", "Sikap mengutamakan kepentingan peribadi"], jawapan: 0 },
+                { soalan: "Gerakan kebangkitan nasionalisme awal di Tanah Melayu pada awal abad ke-20 dipelopori oleh golongan...", pilihan: ["Golongan Agama (Kaum Muda) menerusi majalah Al-Imam", "Golongan bangsawan pro-Barat", "Persatuan peniaga tekstil"], jawapan: 0 },
+                { soalan: "Siapakah tokoh utama Kaum Muda yang giat menyebarkan idea pembaharuan Islam dan nasionalisme?", pilihan: ["Syeikh Muhammad Tahir Jalaluddin dan Syed Sheikh al-Hadi", "Za'ba", "Dato' Onn Jaafar"], jawapan: 0 },
+                { soalan: "Pertubuhan separa tentera bercorak radikal Melayu yang ditubuhkan pada tahun 1938 oleh Ibrahim Haji Yaakob ialah...", pilihan: ["Kesatuan Melayu Muda (KMM)", "Persatuan Melayu Selangor", "PASPAM"], jawapan: 0 },
+                { soalan: "Tentera Jepun mula mendarat di Tanah Melayu pada 8 Disember 1941 di pantai kawasan negeri mana?", pilihan: ["Pantai Padang Pak Amat, Kota Bharu, Kelantan", "Pantai Teluk Cempedak, Pahang", "Pantai Port Dickson, Negeri Sembilan"], jawapan: 0 },
+                { soalan: "Apakah slogan propaganda yang digunakan oleh tentera Jepun untuk memenangi hati penduduk tempatan?", pilihan: ["'Asia Untuk Orang Asia' dan 'Semangat Asia'", "'British Adalah Pelindung Asia'", "'Kemakmuran Bersama Eropah'"], jawapan: 0 },
+                { soalan: "Pasukan tentera gerila anti-Jepun yang ditubuhkan oleh Parti Komunis Malaya (PKM) dengan bantuan British dikenali sebagai...", pilihan: ["MPAJA", "Force 136", "Askar Melayu Diraja"], jawapan: 0 },
+                { soalan: "Apakah nama pasukan rahsia tentera bersekutu (British) yang turut dianggotai pahlawan Melayu seperti Adnan Saidi untuk melawan Jepun?", pilihan: ["Force 136", "MPAJA", "Gila Tentera"], jawapan: 0 },
+                { soalan: "Selepas Jepun menyerah kalah pada Ogos 1945, berlaku kekosongan kuasa di Tanah Melayu selama 14 hari yang dikuasai keganasan...", pilihan: ["Bintang Tiga (Komunis MPAJA)", "Tentera Kuomintang", "Pasukan Tentera Siam"], jawapan: 0 },
+                { soalan: "Apakah nama gagasan pentadbiran baharu yang diperkenalkan British pada tahun 1946 yang mencetuskan penentangan hebat orang Melayu?", pilihan: ["Malayan Union", "Persekutuan Tanah Melayu", "Negeri-Negeri Selat Bersatu"], jawapan: 0 },
+                { soalan: "Mengapakah orang Melayu menentang keras pelaksanaan Malayan Union 1946?", pilihan: ["Kuasa Raja-Raja Melayu dilucutkan dan pemberian syarat kerakyatan longgar (Jus Soli)", "British menaikkan kadar cukai eksport getah", "Gagasan itu tidak memasukkan Singapura"], jawapan: 0 },
+                { soalan: "Di manakah persidangan Kongres Melayu se-Malaya yang melahirkan pertubuhan Pertubuhan Kebangsaan Melayu Bersatu (UMNO) diadakan?", pilihan: ["Kelab Sultan Sulaiman, Kuala Lumpur", "Padang Pahlawan, Melaka", "Istana Maziah, Terengganu"], jawapan: 0 },
+                { soalan: "Siapakah yang dilantik sebagai Yang Dipertua (Presiden) UMNO yang pertama pada tahun 1946?", pilihan: ["Dato' Onn bin Jaafar", "Tunku Abdul Rahman", "Tun Abdul Razak"], jawapan: 0 },
+                { soalan: "Apakah nama pakatan gabungan parti politik radikal Melayu dan bukan Melayu yang menentang UMNO dan mengemukakan 'Perlembagaan Rakyat'?", pilihan: ["PUTERA-AMCJA", "Perikatan", "Barisan Sosialis"], jawapan: 0 },
+                { soalan: "Akibat penentangan padu, British membubarkan Malayan Union dan menggantikannya dengan penubuhan...", pilihan: ["Persekutuan Tanah Melayu 1948", "Kesatuan Malaya Baru", "Republik Tanah Melayu"], jawapan: 0 },
+                { soalan: "Apakah peristiwa penting pada Jun 1948 yang menyebabkan British mengisytiharkan undang-undang Darurat di seluruh Tanah Melayu?", pilihan: ["Pembunuhan tiga orang pengurus ladang Eropah di Sungai Siput, Perak oleh komunis", "Pemberontakan tentera upahan di Singapura", "Mogok umum pekerja pelabuhan"], jawapan: 0 },
+                { soalan: "Apakah nama strategi penempatan semula penduduk luar bandar ke 'Kampung Baru' bagi menyekat bekalan makanan kepada komunis?", pilihan: ["Rancangan Briggs", "Rancangan Templer", "Sistem Kawalan Sempadan"], jawapan: 0 },
+                { soalan: "Slogan 'Bulan Pengampunan Komunis' dan sekatan catuan makanan merupakan strategi di bawah kepimpinan Pesuruhjaya Tinggi...", pilihan: ["Sir Gerald Templer", "Sir Henry Gurney", "Sir Edward Gent"], jawapan: 0 },
+                { soalan: "Di manakah lokasi pertemuan rundingan antara Tunku Abdul Rahman dengan pemimpin komunis Chin Peng pada Disember 1955?", pilihan: ["Sekolah Inggeris Baling, Kedah", "Bukit Fraser, Pahang", "Taiping, Perak"], jawapan: 0 },
+                { soalan: "Apakah nama jawatankuasa antara kaum yang ditubuhkan pada 1949 untuk memupuk perpaduan awal antara pemimpin Melayu, Cina dan India?", pilihan: ["Jawatankuasa Hubungan Antara Kaum (CLC)", "Sistem Ahli", "Sistem Perikatan"], jawapan: 0 },
+                { soalan: "Sistem pentadbiran awal tahun 1951 yang melatih tokoh tempatan bertaraf menteri bagi menerajui jabatan kerajaan dinamakan...", pilihan: ["Sistem Ahli", "Sistem Kabinet Bayangan", "Majlis Kerja Persekutuan"], jawapan: 0 },
+                { soalan: "Apakah nama parti politik gabungan awal yang memenangi majoriti besar dalam Pilihan Raya Majlis Perundangan Persekutuan 1955?", pilihan: ["Parti Perikatan (UMNO-MCA-MIC)", "Parti Negara", "Parti Buruh Malaya"], jawapan: 0 },
+                { soalan: "Apakah manifesto atau janji utama yang dibawa oleh Parti Perikatan dalam pilihan raya tahun 1955?", pilihan: ["Mencapai kemerdekaan dalam tempoh empat tahun", "Menghapuskan semua cukai pertanian", "Menjadikan Tanah Melayu sebuah republik"], jawapan: 0 },
+                { soalan: "Siapakah Ketua Menteri pertama Persekutuan Tanah Melayu selepas kemenangan Pilihan Raya 1955?", pilihan: ["Tunku Abdul Rahman", "Dato' Onn Jaafar", "Tun Tan Cheng Lock"], jawapan: 0 },
+                { soalan: "Apakah nama rombongan rasmi yang bertolak ke London pada tahun 1956 bagi merundingkan tarikh merdeka?", pilihan: ["Rombongan Kemerdekaan", "Misi Diraja", "Rombongan Malaya Merdeka"], jawapan: 0 },
+                { soalan: "Di lokasi manakah Tunku Abdul Rahman membuat pengumuman rasmi tarikh kemerdekaan sejurus pulang dari London?", pilihan: ["Padang Pahlawan, Bandar Hilir, Melaka", "Stadium Merdeka, Kuala Lumpur", "Kelab Selangor"], jawapan: 0 },
+                { soalan: "Apakah nama suruhanjaya bebas yang ditugaskan menggubal Perlembagaan Persekutuan Tanah Melayu yang merdeka?", pilihan: ["Suruhanjaya Reid", "Suruhanjaya Cobbold", "Suruhanjaya Lansdowne"], jawapan: 0 },
+                { soalan: "Siapakah yang melaungkan laungan keramat 'MERDEKA!' sebanyak 7 kali di Stadium Merdeka pada 31 Ogos 1957?", pilihan: ["Tunku Abdul Rahman", "Sultan Abdul Hamid", "Tun Abdul Razak"], jawapan: 0 },
+                { soalan: "Apakah institusi tertinggi yang dibentuk dalam perlembagaan merdeka sebagai Ketua Utama Negara bagi menggantikan kuasa gabenor British?", pilihan: ["Yang di-Pertuan Agong", "Perdana Menteri", "Majlis Raja-Raja"], jawapan: 0 },
+                { soalan: "Hak istimewa orang Melayu dan kedudukan agama Islam dikekalkan dalam Perlembagaan Merdeka di bawah perkara...", pilihan: ["Perkara 153 dan Perkara 3", "Perkara 11 dan Perkara 12", "Perkara 14 dan Perkara 15"], jawapan: 0 }
+            ],
+            5: [
+                { soalan: "Siapakah Perdana Menteri yang mencetuskan idea gagasan penubuhan Malaysia pada 27 Mei 1961?", pilihan: ["Tunku Abdul Rahman", "Tun Abdul Razak", "Lee Kuan Yew"], jawapan: 0 },
+                { soalan: "Manakah antara berikut kombinasi wilayah asal yang terlibat dalam cadangan pembentukan Malaysia?", pilihan: ["Persekutuan Tanah Melayu, Singapura, Sarawak, Sabah, dan Brunei", "Tanah Melayu, Thailand dan Filipina", "Sarawak, Sabah, dan Indonesia"], jawapan: 0 },
+                { soalan: "Apakah matlamat utama penubuhan Malaysia dari aspek keselamatan geopolitik?", pilihan: ["Membendung ancaman dan penyebaran ideologi komunis terutamanya di Singapura dan Sarawak", "Mewujudkan pakatan tentera menyerang negara jiran", "Mengambil alih kekayaan minyak Brunei semata-mata"], jawapan: 0 },
+                { soalan: "Apakah nama jawatankuasa yang ditubuhkan pada Julai 1961 untuk mengadakan lawatan penerangan mengenai Malaysia?", pilihan: ["Jawatankuasa Perundingan Perpaduan Malaysia (JPPM)", "Suruhanjaya Cobbold", "Suruhanjaya Reid"], jawapan: 0 },
+                { soalan: "Suruhanjaya Cobbold ditubuhkan pada tahun 1962 bermatlamat khusus untuk...", pilihan: ["Meninjau pandangan rakyat Sabah and Sarawak terhadap pembentukan Malaysia", "Menggubal lagu kebangsaan yang baharu", "Menasihati Sultan Brunei tentang sistem beraja"], jawapan: 0 },
+                { soalan: "Apakah hasil laporan Suruhanjaya Cobbold terhadap hasrat penduduk di Sabah dan Sarawak?", pilihan: ["Satu pertiga menyokong penuh, satu pertiga sokong dengan syarat, satu pertiga mahu merdeka sendiri", "Kesemua penduduk menolak gagasan Malaysia", "Penduduk mahu menyertai Indonesia"], jawapan: 0 },
+                { soalan: "Negara manakah yang melancarkan dasar konfrontasi ketenteraan dengan slogan 'Ganyang Malaysia' pada awal tahun 1963?", pilihan: ["Indonesia", "Filipina", "Singapura"], jawapan: 0 },
+                { soalan: "Siapakah Presiden Indonesia yang memimpin penentangan ketenteraan konfrontasi terhadap Malaysia?", pilihan: ["Presiden Sukarno", "Presiden Suharto", "Presiden Megawati"], jawapan: 0 },
+                { soalan: "Apakah tuntutan rasmi yang dikemukakan oleh kerajaan Filipina bagi menentang pembentukan Malaysia?", pilihan: ["Menuntut hak wilayah Sabah yang didakwa milik waris Kesultanan Sulu", "Menuntut penyerahan Sarawak", "Menuntut hak perkongsian pelabuhan Singapura"], jawapan: 0 },
+                { soalan: "Tarikh rasmi pengisytiharan penubuhan persekutuan Malaysia yang lengkap akhirnya berjaya dilaksanakan pada...", pilihan: ["16 September 1963", "31 Ogos 1963", "13 Mei 1969"], jawapan: 0 },
+                { soalan: "Negara manakah yang menarik diri daripada menyertai Malaysia pada saat-saat akhir sebelum pengisytiharan?", pilihan: ["Brunei", "Singapura", "Filipina"], jawapan: 0 },
+                { soalan: "Atas faktor politik dan tuntutan ekonomi, Singapura telah dipisahkan keluar daripada Malaysia pada tahun berapakah?", pilihan: ["1965", "1963", "1970"], jawapan: 0 },
+                { soalan: "Apakah peristiwa hitam rusuhan kaum yang berlaku di negara kita pada tarikh 13 Mei 1969?", pilihan: ["Tragedi 13 Mei (Ketegangan kaum pasca pilihan raya)", "Konfrontasi komunis di sempadan", "Mogok umum pekerja estet"], jawapan: 0 },
+                { soalan: "Apakah nama badan pentadbiran khas yang ditubuhkan untuk memulihkan keamanan negara ekoran tragedi 13 Mei 1969?", pilihan: ["MAGERAN (Majlis Gerakan Negara)", "Kabinet Darurat", "Majlis Keselamatan Negara"], jawapan: 0 },
+                { soalan: "Ideologi kebangsaan 'Rukun Negara' telah diisytiharkan pada 31 Ogos 1970 oleh Yang di-Pertuan Agong bertujuan untuk...", pilihan: ["Membentuk perpaduan yang erat dalam kalangan masyarakat berbilang kaum", "Menghapuskan bahasa ibunda kaum lain", "Menggantikan perlembagaan persekutuan yang asal"], jawapan: 0 },
+                { soalan: "Sebutkan prinsip ke-3 dalam susunan lima prinsip Rukun Negara.", pilihan: ["Keluhuran Perlembagaan", "Kedaulatan Undang-Undang", "Kesetiaan kepada Raja dan Negara"], jawapan: 0 },
+                { soalan: "Apakah dasar pembangunan ekonomi jangka panjang yang dilancarkan pada 1970 bertujuan membasmi kemiskinan dan menyusun semula masyarakat?", pilihan: ["Dasar Ekonomi Baru (DEB)", "Dasar Pembangunan Nasional", "Dasar Halatuju Luar"], jawapan: 0 },
+                { soalan: "Apakah agensi kerajaan yang ditubuhkan untuk membuka tanah rancangan baharu bagi meningkatkan taraf hidup masyarakat luar bandar?", pilihan: ["FELDA", "MARA", "FAMA"], jawapan: 0 },
+                { soalan: "Dasar Kebudayaan Kebangsaan (DKK) 1971 digubal berteraskan tiga prinsip utama. Apakah prinsip pertamanya?", pilihan: ["Kebudayaan berteraskan kebudayaan rakyat asal rantau ini (Melayu)", "Mengambil budaya barat secara mutlak", "Mewajibkan satu pakaian tradisional sahaja"], jawapan: 0 },
+                { soalan: "Apakah nama dasar pendidikan yang menetapkan penggunaan Bahasa Melayu sebagai bahasa pengantar utama di semua sekolah?", pilihan: ["Dasar Pendidikan Kebangsaan (Laporan Rahman Talib / Razak)", "Dasar Sekolah Vernakular", "Akta Universiti Kuno"], jawapan: 0 },
+                { soalan: "Wawasan 2020 yang bermatlamat menjadikan Malaysia sebuah negara maju mengikut acuan sendiri diumumkan oleh...", pilihan: ["Tun Dr. Mahathir Mohamad", "Tun Abdul Razak", "Tun Hussein Onn"], jawapan: 0 },
+                { soalan: "Apakah nama projek kereta nasional pertama negara yang dilancarkan di bawah Dasar Perindustrian Berat Negara pada 1985?", pilihan: ["Proton Saga", "Perodua Kancil", "Modenas"], jawapan: 0 },
+                { soalan: "Sistem pemerintahan Malaysia mengamalkan konsep Raja Berperlembagaan dan...", pilihan: ["Demokrasi Berparlimen", "Republik Sosialis", "Monarki Mutlak"], jawapan: 0 },
+                { soalan: "Kuasa pemerintahan di Malaysia dibahagikan kepada tiga badan iaitu Perundangan (Legislatif), Eksekutif, dan...", pilihan: ["Kehakiman (Judisiari)", "Ketenteraan", "Kewangan"], jawapan: 0 },
+                { soalan: "Badan Eksekutif yang menjalankan tugas pentadbiran tertinggi negara diketuai secara rasmi oleh...", pilihan: ["Perdana Menteri dan Jemaah Menteri (Kabinet)", "Ketua Hakim Negara", "Yang Dipertua Dewan Rakyat"], jawapan: 0 },
+                { soalan: "Dewan Rakyat dan Dewan Negara berada di bawah struktur parlimen komponen badan...", pilihan: ["Perundangan", "Kehakiman", "Kebajikan"], jawapan: 0 },
+                { soalan: "Dasar Luar Malaysia pada peringkat awal kemerdekaan (era Tunku Abdul Rahman) mengamalkan dasar bercorak...", pilihan: ["Pro-Barat dan Anti-Komunis", "Berkecuali sepenuhnya", "Sokong blok komunis Timur"], jawapan: 0 },
+                { soalan: "Malaysia mengamalkan prinsip berkecuali dan menjalinkan hubungan tanpa mengira ideologi politik bermula pada zaman Perdana Menteri ke-2 iaitu...", pilihan: ["Tun Abdul Razak", "Tun Hussein Onn", "Tun Dr. Mahathir Mohamad"], jawapan: 0 },
+                { soalan: "Apakah pertubuhan serantau Asia Tenggara yang disertai oleh Malaysia pada 8 Ogos 1967 bagi memupuk kerjasama ekonomi dan kestabilan politik?", pilihan: ["ASEAN", "Komanwel", "OIC"], jawapan: 0 },
+                { soalan: "Zon Aman, Bebas dan Berkecuali yang diisytiharkan oleh ASEAN di Kuala Lumpur pada 1971 dikenali sebagai konsep...", pilihan: ["ZOPFAN", "CHOGM", "NAM"], jawapan: 0 }
+            ]
+        };
+
+        let tktSemasa = 1;
+        let idxSoalan = 0;
+        let markah = 0;
+        let statusJawab = false;
+
+        function tukarHalaman(idHalaman) {
+            // Senarai semua id halaman yang wujud
+            const halaman = ['utama', 'tokoh', 'peta', 'galeri', 'kuiz', 'hubungi'];
+            
+            // Sembunyikan semua halaman dan buang kelas aktif pada menu navigasi
+            halaman.forEach(h => {
+                const pageEl = document.getElementById(`page-${h}`);
+                const navEl = document.getElementById(`nav-${h}`);
+                if(pageEl) pageEl.classList.remove('active-page');
+                if(navEl) navEl.classList.remove('active');
+            });
+
+            // Tampilkan halaman yang dipilih dan letakkan kelas aktif pada navigasi
+            const activePage = document.getElementById(`page-${idHalaman}`);
+            const activeNav = document.getElementById(`nav-${idHalaman}`);
+            if(activePage) activePage.classList.add('active-page');
+            if(activeNav) activeNav.classList.add('active');
+
+            // Kemas kini reka bentuk banner HERO mengikut halaman yang dibuka
+            if(idHalaman === 'utama') {
+                document.getElementById('hero-title').innerText = "Portal Sejarah Warisan";
+                document.getElementById('hero-desc').innerText = "Pusat dokumentasi, rujukan kronologi, dan penilaian kendiri.";
+            } else if(idHalaman === 'tokoh') {
+                document.getElementById('hero-title').innerText = "Galeri Tokoh Pahlawan";
+                document.getElementById('hero-desc').innerText = "Mengenali pejuang kedaulatan tanah air moden dan tradisi.";
+            } else if(idHalaman === 'peta') {
+                document.getElementById('hero-title').innerText = "Peta Bersejarah";
+                document.getElementById('hero-desc').innerText = "Modul pemetaan dan eksplorasi lokasi bersejarah Tanah Melayu.";
+            } else if(idHalaman === 'galeri') {
+                document.getElementById('hero-title').innerText = "Galeri Arkib Visual";
+                document.getElementById('hero-desc').innerText = "Koleksi gambar, dokumen lama, dan artifak digital warisan negara.";
+            } else if(idHalaman === 'kuiz') {
+                document.getElementById('hero-title').innerText = "Kuiz Minda Sejarah";
+                document.getElementById('hero-desc').innerText = "Sistem soalan objektif komprehensif mengikut standard silibus.";
+                muatSoalan();
+            } else if(idHalaman === 'hubungi') {
+                document.getElementById('hero-title').innerText = "Hubungi Urus Setia";
+                document.getElementById('hero-desc').innerText = "Hubungi kami untuk sebarang maklumat lanjut berkaitan sistem.";
+            }
+        }
+
+        function tktButtonVisual(tkt) {
+            document.querySelectorAll('.tingkatan-btn').forEach(btn => btn.classList.remove('active'));
+            const butang = document.querySelectorAll('.tingkatan-btn')[tkt - 1];
+            if(butang) butang.classList.add('active');
+        }
+
+        function tukarTingkatan(tkt) {
+            tktSemasa = tkt;
+            idxSoalan = 0;
+            markah = 0;
+            tktButtonVisual(tkt);
+            muatSoalan();
+        }
+
+        function muatSoalan() {
+            statusJawab = false;
+            const dataSet = bankSoalan[tktSemasa];
+            const data = dataSet[idxSoalan];
+            
+            document.getElementById('question-text').innerText = `[Tingkatan ${tktSemasa} - Soalan ${idxSoalan + 1}/${dataSet.length}] ${data.soalan}`;
+            
+            const blokPilihan = document.getElementById('options-block');
+            blokPilihan.innerHTML = '';
+            
+            data.pilihan.forEach((teks, index) => {
+                const item = document.createElement('li');
+                item.className = 'pilihan-item';
+                
+                const abjadLabel = String.fromCharCode(65 + index);
+                item.innerHTML = `<span style="background:var(--bg-parchment); color:var(--vintage-brown); font-weight:bold; padding:3px 9px; margin-right:12px; border-radius:3px; border:1px solid var(--accent-gold);">${abjadLabel}</span> ${teks}`;
+                
+                item.onclick = () => verifikasiJawapan(index, item);
+                blokPilihan.appendChild(item);
+            });
+            
+            document.getElementById('feedback-block').style.display = 'none';
+            paparSkor();
+        }
+
+        function verifikasiJawapan(pilihanIdx, elemenKlik) {
+            if (statusJawab) return;
+            statusJawab = true;
+            
+            const jawapanBetul = bankSoalan[tktSemasa][idxSoalan].jawapan;
+            const senaraiPilihan = document.querySelectorAll('.pilihan-item');
+            const fBlock = document.getElementById('feedback-block');
+            fBlock.style.display = 'block';
+
+            if (pilihanIdx === jawapanBetul) {
+                elemenKlik.classList.add('selected-correct');
+                fBlock.innerText = "📜 TAHNIAH! Manuskrip anda tepat. ✔️";
+                fBlock.style.backgroundColor = "#e8f5e9";
+                fBlock.style.color = "var(--correct-green)";
+                fBlock.style.borderColor = "var(--correct-green)";
+                markah++;
+            } else {
+                elemenKlik.classList.add('selected-wrong');
+                senaraiPilihan[jawapanBetul].classList.add('selected-correct');
+                fBlock.innerText = `❌ KURANG TEPAT. Rujukan sahih ditandakan dengan warna hijau.`;
+                fBlock.style.backgroundColor = "#ffebee";
+                fBlock.style.color = "var(--wrong-red)";
+                fBlock.style.borderColor = "var(--wrong-red)";
+            }
+            paparSkor();
+        }
+
+        function kemajuanSoalan() {
+            if (!statusJawab) {
+                alert("Sila pilih satu jawapan terlebih dahulu sebelum meneruskan kronologi!");
+                return;
+            }
+            
+            const totalSoalan = bankSoalan[tktSemasa].length;
+            
+            if (idxSoalan < totalSoalan - 1) {
+                idxSoalan++;
+                muatSoalan();
+            } else {
+                alert(`🏛️ Sesi Penilaian Tamat!\n\nAnda telah menyelesaikan kesemua cabaran Tingkatan ${tktSemasa}.\nJumlah Pencapaian Skor: ${markah} / ${totalSoalan}`);
+                idxSoalan = 0;
+                markah = 0;
+                muatSoalan();
+            }
+        }
+
+        function paparSkor() {
+            document.getElementById('score-board').innerText = `Skor Warisan: ${markah} / ${bankSoalan[tktSemasa].length}`;
+        }
+
+        // Jalankan fungsi ini secara automatik apabila sistem mula-mula dibuka
+        window.onload = function() {
+            tukarHalaman('kuiz'); // Mengaktifkan halaman kuiz secara terus tanpa blank
+        };
+        const tingkatan =
+        localStorage.getItem("tingkatanDipilih");
+
+        if(tingkatan){
+            tukarTingkatan(parseInt(tingkatan));
+        }
+    </script>
+</body>
+</html>
